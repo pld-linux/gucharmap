@@ -15,6 +15,7 @@ BuildRequires:	gtk+2-devel >= 2.2.0
 BuildRequires:	libgnomeui-devel >= 2.2.0
 BuildRequires:	libtool
 BuildRequires:	pango-devel >= 1.2.1
+Requires(post,postun):	/sbin/ldconfig
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
