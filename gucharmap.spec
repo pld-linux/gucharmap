@@ -78,9 +78,10 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/*charmap
 %attr(755,root,root) %{_libdir}/*.so.*.*.*
-%dir %{_libdir}/%{name}
 %{_sysconfdir}/%{name}
-%{_libdir}/%{name}/immodules/im-gucharmap.so
+%dir %{_libdir}/%{name}
+%dir %{_libdir}/%{name}/immodules
+%attr(755,root,root) %{_libdir}/%{name}/immodules/im-gucharmap.so
 %{_desktopdir}/*
 %{_pixmapsdir}/*
 
