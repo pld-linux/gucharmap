@@ -62,7 +62,8 @@ Statyczna wersja bibliotek gucharmap.
 %{__aclocal}
 %{__automake}
 %{__autoconf}
-%configure
+%configure \
+	--disable-gtk-immodules
 
 %{__make}
 
