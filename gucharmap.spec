@@ -1,14 +1,13 @@
 Summary:	Unicode character map
 Summary(pl):	Mapa znaków unikodowych
 Name:		gucharmap
-Version:	1.2.0
+Version:	1.3.0
 Release:	1
 License:	GPL
 Group:		X11/Applications
-Source0:	http://ftp.gnome.org/pub/gnome/sources/%{name}/1.2/%{name}-%{version}.tar.bz2
-# Source0-md5:	70c94bdfb13f7f47b108653237177756
+Source0:	http://ftp.gnome.org/pub/gnome/sources/%{name}/1.3/%{name}-%{version}.tar.bz2
+# Source0-md5:	dadfe6c589514b5ed7625be2078f27a8
 Patch0:		%{name}-destdir.patch
-Patch1:		%{name}-desktop.patch
 URL:		http://www.gnome.org/
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -62,7 +61,6 @@ Statyczna wersja bibliotek gucharmap.
 %prep
 %setup -q
 %patch0 -p1
-%patch1 -p1
 
 %build
 %{__libtoolize}
