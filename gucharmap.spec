@@ -18,7 +18,7 @@ BuildRequires:	libgnomeui-devel >= 2.4.0
 BuildRequires:	libtool
 BuildRequires:	pango-devel >= 1.2.5
 BuildRequires:	popt-devel
-BuildRequires:  scrollkeeper >= 0.3.8
+BuildRequires:	scrollkeeper >= 0.3.8
 Requires(post,postun):	/sbin/ldconfig
 Requires(post,postun):	gtk+2
 Requires(post,postun):	scrollkeeper
