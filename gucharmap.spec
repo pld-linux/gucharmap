@@ -33,11 +33,11 @@ Gucharmap jest warto¶ciow± map± znaków unikodowych.
 Summary:	Headers for gucharmap
 Summary(pl):	Pliki nag³ówkowe gucharmap
 Group:		Development/Libraries
-Requires:	%{name} = %{version}
+Requires:	%{name} = %{version}-%{release}
 Requires:	gtk+2-devel >= 2.2.4
 Requires:	libgnomeui-devel >= 2.4.0
 Requires:	pango-devel >= 1.2.5
-Obsoletes:	%{name}-static
+Obsoletes:	gucharmap-static
 
 %description devel
 The gucharmap-devel package includes the header files that you will
