@@ -1,0 +1,12 @@
+diff -urN gucharmap-0.6.1.orig/gucharmap/Makefile.am gucharmap-0.6.1/gucharmap/Makefile.am
+--- gucharmap-0.6.1.orig/gucharmap/Makefile.am	Mon May 19 12:13:11 2003
++++ gucharmap-0.6.1/gucharmap/Makefile.am	Mon May 19 14:14:22 2003
+@@ -121,7 +121,7 @@
+ 	$(GTK_QUERY_IMMODULES) $(module_LTLIBRARIES) > gtk.immodules ;
+ 
+ install-data-hook: im-module-file
+-	GTK_PATH=$$GTK_PATH:$(DESTDIR)$(libdir)/gtk-2.0 $(GTK_QUERY_IMMODULES) > `./im-module-file` ;
++	GTK_PATH=$$GTK_PATH:$(DESTDIR)$(libdir)/gtk-2.0 $(GTK_QUERY_IMMODULES) > $(DESTDIR)`./im-module-file` ;
+ 
+ 
+ EXTRA_DIST = gucharmap_marshal.list gucharmaprc.rc 
