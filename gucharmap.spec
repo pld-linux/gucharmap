@@ -1,22 +1,26 @@
 Summary:	Unicode character map
 Summary(pl):	Mapa znaków unikodowych
 Name:		gucharmap
-Version:	1.0.0
+Version:	1.2.0
 Release:	1
 License:	GPL
 Group:		X11/Applications
-Source0:	http://ftp.gnome.org/pub/gnome/sources/%{name}/1.0/%{name}-%{version}.tar.bz2
-# Source0-md5:	1142d48c2fe4a2ece6625c4c1ee4f4b3
+Source0:	http://ftp.gnome.org/pub/gnome/sources/%{name}/1.2/%{name}-%{version}.tar.bz2
+# Source0-md5:	70c94bdfb13f7f47b108653237177756
 Patch0:		%{name}-destdir.patch
 URL:		http://www.gnome.org/
 BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	gtk+2-devel >= 2.2.4
+BuildRequires:	libgnome-devel >= 2.4.0
 BuildRequires:	libgnomeui-devel >= 2.4.0
 BuildRequires:	libtool
 BuildRequires:	pango-devel >= 1.2.5
+BuildRequires:	popt-devel
+BuildRequires:  scrollkeeper >= 0.3.8
 Requires(post,postun):	/sbin/ldconfig
 Requires(post,postun):	gtk+2
+Requires(post,postun):	scrollkeeper
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -81,7 +85,7 @@ ln -sf gucharmap $RPM_BUILD_ROOT%{_bindir}/charmap
 # remove useless files
 rm $RPM_BUILD_ROOT%{_libdir}/gtk-2.0/2.2.0/immodules/*.{a,la}
 
-%find_lang %{name}
+%find_lang %{name} --with-gnome
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -90,11 +94,13 @@ rm -rf $RPM_BUILD_ROOT
 umask 022
 /sbin/ldconfig
 gtk-query-immodules-2.0 >/etc/gtk-2.0/gtk.immodules
+/usr/bin/scrollkeeper-update
 
 %postun
 umask 022
 /sbin/ldconfig
 gtk-query-immodules-2.0 >/etc/gtk-2.0/gtk.immodules
+/usr/bin/scrollkeeper-update
 
 %files -f %{name}.lang
 %defattr(644,root,root,755)
@@ -103,6 +109,7 @@ gtk-query-immodules-2.0 >/etc/gtk-2.0/gtk.immodules
 %attr(755,root,root) %{_libdir}/gtk-2.0/2.2.0/immodules/im-gucharmap.so
 %{_desktopdir}/*
 %{_pixmapsdir}/*
+%{_omf_dest_dir}/*
 
 %files devel
 %defattr(644,root,root,755)
