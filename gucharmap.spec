@@ -1,21 +1,22 @@
 Summary:	Unicode character map
 Summary(pl):	Mapa znaków unikodowych
 Name:		gucharmap
-Version:	0.9.0
+Version:	1.0.0
 Release:	1
 License:	GPL
 Group:		X11/Applications
-Source0:	http://ftp.gnome.org/pub/gnome/sources/%{name}/0.9/%{name}-%{version}.tar.bz2
-# Source0-md5:	df894a9f5ba2ee512f68a9215a5b1e07
+Source0:	http://ftp.gnome.org/pub/gnome/sources/%{name}/1.0/%{name}-%{version}.tar.bz2
+# Source0-md5:	1142d48c2fe4a2ece6625c4c1ee4f4b3
 Patch0:		%{name}-destdir.patch
 URL:		http://www.gnome.org/
 BuildRequires:	autoconf
 BuildRequires:	automake
-BuildRequires:	gtk+2-devel >= 2.2.0
-BuildRequires:	libgnomeui-devel >= 2.3.3.1-2
+BuildRequires:	gtk+2-devel >= 2.2.4
+BuildRequires:	libgnomeui-devel >= 2.4.0
 BuildRequires:	libtool
-BuildRequires:	pango-devel >= 1.2.1
+BuildRequires:	pango-devel >= 1.2.5
 Requires(post,postun):	/sbin/ldconfig
+Requires(post,postun):	gtk+2
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -29,9 +30,9 @@ Summary:	Headers for gucharmap
 Summary(pl):	Pliki nag³ówkowe gucharmap
 Group:		Development/Libraries
 Requires:	%{name} = %{version}
-Requires:	gtk+2-devel >= 2.2.0
-Requires:	libgnomeui-devel >= 2.3.3.1-2
-Requires:	pango-devel >= 1.2.1
+Requires:	gtk+2-devel >= 2.2.4
+Requires:	libgnomeui-devel >= 2.4.0
+Requires:	pango-devel >= 1.2.5
 
 %description devel
 The gucharmap-devel package includes the header files that you will
