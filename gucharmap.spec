@@ -1,11 +1,12 @@
 Summary:	Unicode character map
 Summary(pl):	Mapa znaków unikodowych
 Name:		gucharmap
-Version:	0.6.0
-Release:	1
+Version:	0.6.1
+Release:	0.9
 License:	GPL
 Group:		X11/Applications
 Source0:	http://ftp.gnome.org/pub/gnome/sources/%{name}/0.6/%{name}-%{version}.tar.bz2
+Patch0:		%{name}-destdir.patch
 URL:		http://www.gnome.org/
 BuildRequires:	gtk+2-devel >= 2.2.0
 BuildRequires:	libgnomeui-devel >= 2.2.0
@@ -49,8 +50,13 @@ Statyczna wersja bibliotek gucharmap.
 
 %prep
 %setup -q
+%patch0 -p1
 
 %build
+%{__libtoolize}
+%{__aclocal}
+%{__automake}
+%{__autoconf}
 %configure
 
 %{__make}
@@ -58,13 +64,15 @@ Statyczna wersja bibliotek gucharmap.
 %install
 rm -rf $RPM_BUILD_ROOT
 
+install -d $RPM_BUILD_ROOT%{_sysconfdir}/gtk-2.0
+
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
 
 ln -sf gucharmap $RPM_BUILD_ROOT%{_bindir}/charmap
 
 # remove useless files
-rm $RPM_BUILD_ROOT%{_libdir}/%{name}/immodules/*.{a,la}
+rm $RPM_BUILD_ROOT%{_libdir}/gtk-2.0/2.2.0/immodules/*.{a,la}
 
 %find_lang %{name}
 
@@ -78,10 +86,8 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/*charmap
 %attr(755,root,root) %{_libdir}/*.so.*.*.*
-%{_sysconfdir}/%{name}
-%dir %{_libdir}/%{name}
-%dir %{_libdir}/%{name}/immodules
-%attr(755,root,root) %{_libdir}/%{name}/immodules/im-gucharmap.so
+%{_sysconfdir}/gtk-2.0/gtk.immodules
+%attr(755,root,root) %{_libdir}/gtk-2.0/2.2.0/immodules/im-gucharmap.so
 %{_desktopdir}/*
 %{_pixmapsdir}/*
 
