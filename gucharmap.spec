@@ -6,6 +6,7 @@ Release:	0.9
 License:	GPL
 Group:		X11/Applications
 Source0:	http://ftp.gnome.org/pub/gnome/sources/%{name}/0.6/%{name}-%{version}.tar.bz2
+# Source0-md5:	b71c8875e37276a3e197d88d2a920ec5
 Patch0:		%{name}-destdir.patch
 URL:		http://www.gnome.org/
 BuildRequires:	autoconf
