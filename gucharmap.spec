@@ -2,7 +2,7 @@ Summary:	Unicode character map
 Summary(pl):	Mapa znaków unikodowych
 Name:		gucharmap
 Version:	0.8.0
-Release:	2
+Release:	3
 License:	GPL
 Group:		X11/Applications
 Source0:	http://ftp.gnome.org/pub/gnome/sources/%{name}/0.8/%{name}-%{version}.tar.bz2
@@ -12,7 +12,7 @@ URL:		http://www.gnome.org/
 BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	gtk+2-devel >= 2.2.0
-BuildRequires:	libgnomeui-devel >= 2.2.0
+BuildRequires:	libgnomeui-devel >= 2.3.3.1-2
 BuildRequires:	libtool
 BuildRequires:	pango-devel >= 1.2.1
 Requires(post,postun):	/sbin/ldconfig
@@ -30,7 +30,7 @@ Summary(pl):	Pliki nag³ówkowe gucharmap
 Group:		Development/Libraries
 Requires:	%{name} = %{version}
 Requires:	gtk+2-devel >= 2.2.0
-Requires:	libgnomeui-devel >= 2.2.0
+Requires:	libgnomeui-devel >= 2.3.3.1-2
 Requires:	pango-devel >= 1.2.1
 
 %description devel
