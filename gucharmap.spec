@@ -8,8 +8,11 @@ Group:		X11/Applications
 Source0:	http://ftp.gnome.org/pub/gnome/sources/%{name}/0.6/%{name}-%{version}.tar.bz2
 Patch0:		%{name}-destdir.patch
 URL:		http://www.gnome.org/
+BuildRequires:	autoconf
+BuildRequires:	automake
 BuildRequires:	gtk+2-devel >= 2.2.0
 BuildRequires:	libgnomeui-devel >= 2.2.0
+BuildRequires:	libtool
 BuildRequires:	pango-devel >= 1.2.1
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
