@@ -16,7 +16,7 @@ BuildRequires:	gtk+2-devel >= 2.2.4
 BuildRequires:	libgnome-devel >= 2.4.0
 BuildRequires:	libgnomeui-devel >= 2.4.0
 BuildRequires:	libtool
-BuildRequires:	pango-devel >= 1.2.5
+BuildRequires:	pango-devel >= 1:1.2.5
 BuildRequires:	popt-devel
 BuildRequires:	scrollkeeper >= 0.3.8
 Requires(post,postun):	/sbin/ldconfig
@@ -37,7 +37,7 @@ Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
 Requires:	gtk+2-devel >= 2.2.4
 Requires:	libgnomeui-devel >= 2.4.0
-Requires:	pango-devel >= 1.2.5
+Requires:	pango-devel >= 1:1.2.5
 
 %description devel
 The gucharmap-devel package includes the header files that you will
