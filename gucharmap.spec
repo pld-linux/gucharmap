@@ -1,13 +1,13 @@
 Summary:	Unicode character map
 Summary(pl):	Mapa znaków unikodowych
 Name:		gucharmap
-Version:	1.3.0
+Version:	1.3.1
 Release:	1
 License:	GPL
 Group:		X11/Applications
 Source0:	http://ftp.gnome.org/pub/gnome/sources/%{name}/1.3/%{name}-%{version}.tar.bz2
-# Source0-md5:	dadfe6c589514b5ed7625be2078f27a8
-Patch0:		%{name}-destdir.patch
+# Source0-md5:	abf0b72a7973e701c5987d57889f4cd6
+Patch0:		%{name}-locale-names.patch
 URL:		http://www.gnome.org/
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -37,6 +37,7 @@ Requires:	%{name} = %{version}
 Requires:	gtk+2-devel >= 2.2.4
 Requires:	libgnomeui-devel >= 2.4.0
 Requires:	pango-devel >= 1.2.5
+Obsoletes:	%{name}-static
 
 %description devel
 The gucharmap-devel package includes the header files that you will
@@ -46,21 +47,11 @@ need to use gucharmap.
 Ten pakiet zawiera pliki nag³ówkowe potrzebne do kompilacji programów
 u¿ywaj±cych gucharmap.
 
-%package static
-Summary:	Static gucharmap libraries
-Summary(pl):	Statyczne biblioteki gucharmap
-Group:		Development/Libraries
-Requires:	%{name}-devel = %{version}
-
-%description static
-Static version of gucharmap libraries.
-
-%description static -l pl
-Statyczna wersja bibliotek gucharmap.
-
 %prep
 %setup -q
 %patch0 -p1
+
+mv po/{no,nb}.po
 
 %build
 %{__libtoolize}
@@ -75,15 +66,10 @@ Statyczna wersja bibliotek gucharmap.
 %install
 rm -rf $RPM_BUILD_ROOT
 
-install -d $RPM_BUILD_ROOT%{_sysconfdir}/gtk-2.0
-
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
 
 ln -sf gucharmap $RPM_BUILD_ROOT%{_bindir}/charmap
-
-# remove useless files
-rm $RPM_BUILD_ROOT%{_libdir}/gtk-2.0/2.2.0/immodules/*.{a,la}
 
 %find_lang %{name} --with-gnome
 
@@ -91,22 +77,17 @@ rm $RPM_BUILD_ROOT%{_libdir}/gtk-2.0/2.2.0/immodules/*.{a,la}
 rm -rf $RPM_BUILD_ROOT
 
 %post
-umask 022
 /sbin/ldconfig
-gtk-query-immodules-2.0 >/etc/gtk-2.0/gtk.immodules
 /usr/bin/scrollkeeper-update
 
 %postun
-umask 022
 /sbin/ldconfig
-gtk-query-immodules-2.0 >/etc/gtk-2.0/gtk.immodules
 /usr/bin/scrollkeeper-update
 
 %files -f %{name}.lang
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/*charmap
 %attr(755,root,root) %{_libdir}/*.so.*.*.*
-%attr(755,root,root) %{_libdir}/gtk-2.0/2.2.0/immodules/im-gucharmap.so
 %{_desktopdir}/*
 %{_pixmapsdir}/*
 %{_omf_dest_dir}/*
@@ -117,7 +98,3 @@ gtk-query-immodules-2.0 >/etc/gtk-2.0/gtk.immodules
 %{_libdir}/*.la
 %{_includedir}/%{name}
 %{_pkgconfigdir}/*
-
-%files static
-%defattr(644,root,root,755)
-%{_libdir}/*.a
