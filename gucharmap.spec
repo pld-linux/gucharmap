@@ -1,5 +1,5 @@
 Summary:	Unicode character map
-Summary(pl):	Mapa znaków Unikodowych
+Summary(pl):	Mapa znaków unikodowych
 Name:		gucharmap
 Version:	0.4.0
 Release:	1
@@ -16,30 +16,31 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 Gucharmap is a featureful unicode character map.
 
 %description -l pl
-Gucharmap jest warto¶ciow± map± znaków Unikodowych.
+Gucharmap jest warto¶ciow± map± znaków unikodowych.
 
 %package devel
 Summary:	Headers for gucharmap
 Summary(pl):	Pliki nag³ówkowe gucharmap
 Group:		Development/Libraries
 Requires:	%{name} = %{version}
-BuildRequires:	gtk+2-devel >= 2.0.0
-BuildRequires:	libgnomeui-devel >= 2.0.0
-BuildRequires:	pango-devel >= 1.2.1
+Requires:	gtk+2-devel >= 2.0.0
+Requires:	libgnomeui-devel >= 2.0.0
+Requires:	pango-devel >= 1.2.1
 
 %description devel
-The gucharmap-devel package includes the libraries and include files
-that you will need to use gucharmap.
+The gucharmap-devel package includes the header files that you will
+need to use gucharmap.
 
 %description devel -l pl
-Ten pakiet zawiera pliki nag³ówkowe i biblioteki potrzebne do
-kompilacji programów u¿ywaj±cych gucharmap.
+Ten pakiet zawiera pliki nag³ówkowe potrzebne do kompilacji programów
+u¿ywaj±cych gucharmap.
 
 %package static
-Summary:  Static gucharmap libraries
-Summary(pl):  Statyczne biblioteki gucharmap
-Group:    X11/Development/Libraries
-Requires: %{name}-devel = %{version}
+Summary:	Static gucharmap libraries
+Summary(pl):	Statyczne biblioteki gucharmap
+Group:		Development/Libraries
+Requires:	%{name}-devel = %{version}
+
 %description static
 Static version of gucharmap libraries.
 
@@ -67,9 +68,8 @@ ln -sf gucharmap $RPM_BUILD_ROOT%{_bindir}/charmap
 %clean
 rm -rf $RPM_BUILD_ROOT
 
-%post -p /sbin/ldconfig
-
-%postun -p /sbin/ldconfig
+%post	-p /sbin/ldconfig
+%postun	-p /sbin/ldconfig
 
 %files -f %{name}.lang
 %defattr(644,root,root,755)
@@ -80,9 +80,11 @@ rm -rf $RPM_BUILD_ROOT
 
 %files devel
 %defattr(644,root,root,755)
-%{_includedir}/%{name}
+%attr(755,root,root) %{_libdir}/*.so
 %{_libdir}/*.la
+%{_includedir}/%{name}
 %{_pkgconfigdir}/*
 
 %files static
+%defattr(644,root,root,755)
 %{_libdir}/*.a
