@@ -1,0 +1,12 @@
+diff -urN aaa/gucharmap-1.2.0/gucharmap.desktop.in gucharmap-1.2.0/gucharmap.desktop.in
+--- aaa/gucharmap-1.2.0/gucharmap.desktop.in	2003-03-20 04:38:16.000000000 +0100
++++ gucharmap-1.2.0/gucharmap.desktop.in	2003-12-12 23:21:08.000000000 +0100
+@@ -3,7 +3,7 @@
+ _Name=Unicode Character Map
+ Exec=gucharmap
+ Icon=gucharmap.png
+-Terminal=0
++Terminal=false
+ Type=Application
+ Categories=Application;Utility;
+ X-GNOME-Bugzilla-Bugzilla=GNOME
