@@ -1,14 +1,14 @@
 Summary:	Unicode character map
 Summary(pl):	Mapa znaków unikodowych
 Name:		gucharmap
-Version:	0.4.0
+Version:	0.6.0
 Release:	1
 License:	GPL
 Group:		X11/Applications
-Source0:	http://ftp.gnome.org/pub/gnome/sources/%{name}/0.4/%{name}-%{version}.tar.bz2
+Source0:	http://ftp.gnome.org/pub/gnome/sources/%{name}/0.6/%{name}-%{version}.tar.bz2
 URL:		http://www.gnome.org/
-BuildRequires:	gtk+2-devel >= 2.0.0
-BuildRequires:	libgnomeui-devel >= 2.0.0
+BuildRequires:	gtk+2-devel >= 2.2.0
+BuildRequires:	libgnomeui-devel >= 2.2.0
 BuildRequires:	pango-devel >= 1.2.1
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -63,6 +63,9 @@ rm -rf $RPM_BUILD_ROOT
 
 ln -sf gucharmap $RPM_BUILD_ROOT%{_bindir}/charmap
 
+# remove useless files
+rm $RPM_BUILD_ROOT%{_libdir}/%{name}/immodules/*.{a,la}
+
 %find_lang %{name}
 
 %clean
@@ -75,7 +78,10 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/*charmap
 %attr(755,root,root) %{_libdir}/*.so.*.*.*
-%{_datadir}/applications/*
+%dir %{_libdir}/%{name}
+%{_sysconfdir}/%{name}
+%{_libdir}/%{name}/immodules/im-gucharmap.so
+%{_desktopdir}/*
 %{_pixmapsdir}/*
 
 %files devel
