@@ -8,6 +8,7 @@ Group:		X11/Applications
 Source0:	http://ftp.gnome.org/pub/gnome/sources/%{name}/1.2/%{name}-%{version}.tar.bz2
 # Source0-md5:	70c94bdfb13f7f47b108653237177756
 Patch0:		%{name}-destdir.patch
+Patch1:		%{name}-desktop.patch
 URL:		http://www.gnome.org/
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -61,6 +62,7 @@ Statyczna wersja bibliotek gucharmap.
 %prep
 %setup -q
 %patch0 -p1
+%patch1 -p1
 
 %build
 %{__libtoolize}
