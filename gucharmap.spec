@@ -2,7 +2,7 @@ Summary:	Unicode character map
 Summary(pl):	Mapa znaków unikodowych
 Name:		gucharmap
 Version:	0.8.0
-Release:	1
+Release:	2
 License:	GPL
 Group:		X11/Applications
 Source0:	http://ftp.gnome.org/pub/gnome/sources/%{name}/0.8/%{name}-%{version}.tar.bz2
@@ -83,14 +83,20 @@ rm $RPM_BUILD_ROOT%{_libdir}/gtk-2.0/2.2.0/immodules/*.{a,la}
 %clean
 rm -rf $RPM_BUILD_ROOT
 
-%post	-p /sbin/ldconfig
-%postun	-p /sbin/ldconfig
+%post
+umask 022
+/sbin/ldconfig
+gtk-query-immodules-2.0 >/etc/gtk-2.0/gtk.immodules
+
+%postun
+umask 022
+/sbin/ldconfig
+gtk-query-immodules-2.0 >/etc/gtk-2.0/gtk.immodules
 
 %files -f %{name}.lang
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/*charmap
 %attr(755,root,root) %{_libdir}/*.so.*.*.*
-%{_sysconfdir}/gtk-2.0/gtk.immodules
 %attr(755,root,root) %{_libdir}/gtk-2.0/2.2.0/immodules/im-gucharmap.so
 %{_desktopdir}/*
 %{_pixmapsdir}/*
