@@ -2,7 +2,7 @@ Summary:	Unicode character map
 Summary(pl):	Mapa znaków unikodowych
 Name:		gucharmap
 Version:	1.3.1
-Release:	1
+Release:	2
 License:	GPL
 Group:		X11/Applications
 Source0:	http://ftp.gnome.org/pub/gnome/sources/%{name}/1.3/%{name}-%{version}.tar.bz2
@@ -37,7 +37,6 @@ Requires:	%{name} = %{version}-%{release}
 Requires:	gtk+2-devel >= 2.2.4
 Requires:	libgnomeui-devel >= 2.4.0
 Requires:	pango-devel >= 1.2.5
-Obsoletes:	gucharmap-static
 
 %description devel
 The gucharmap-devel package includes the header files that you will
@@ -46,6 +45,18 @@ need to use gucharmap.
 %description devel -l pl
 Ten pakiet zawiera pliki nag³ówkowe potrzebne do kompilacji programów
 u¿ywaj±cych gucharmap.
+
+%package static
+Summary:	Static gucharmap libraries
+Summary(pl):	Statyczne biblioteki gucharmap
+Group:		Development/Libraries
+Requires:	%{name}-devel = %{version}-%{release}
+
+%description static
+Static version of gucharmap libraries.
+
+%description static -l pl
+Statyczna wersja bibliotek gucharmap.
 
 %prep
 %setup -q
@@ -59,7 +70,7 @@ mv po/{no,nb}.po
 %{__automake}
 %{__autoconf}
 %configure \
-	--disable-gtk-immodules
+	--enable-static
 
 %{__make}
 
@@ -98,3 +109,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/*.la
 %{_includedir}/%{name}
 %{_pkgconfigdir}/*
+
+%files static
+%defattr(644,root,root,755)
+%{_libdir}/*.a
