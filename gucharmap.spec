@@ -11,13 +11,16 @@ Patch0:		%{name}-desktop.patch
 URL:		http://www.gnome.org/
 BuildRequires:	autoconf
 BuildRequires:	automake
+BuildRequires:	gettext-devel
 BuildRequires:	gtk+2-devel >= 2:2.6.3
+BuildRequires:	intltool
 BuildRequires:	libgnome-devel >= 2.10.0
 BuildRequires:	libgnomeui-devel >= 2.10.0-2
 BuildRequires:	libtool
 BuildRequires:	pango-devel >= 1:1.8.0
-BuildRequires:	popt-devel
+BuildRequires:	pkgconfig
 BuildRequires:	rpmbuild(macros) >= 1.197
+BuildRequires:	scrollkeeper
 Requires(post,postun):	/sbin/ldconfig
 Requires(post,postun):	scrollkeeper
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
