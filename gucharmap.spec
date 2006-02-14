@@ -1,12 +1,12 @@
 Summary:	Unicode character map
 Summary(pl):	Mapa znaków unikodowych
 Name:		gucharmap
-Version:	1.5.1
+Version:	1.5.2
 Release:	1
 License:	GPL v2
 Group:		X11/Applications
 Source0:	http://ftp.gnome.org/pub/gnome/sources/gucharmap/1.5/%{name}-%{version}.tar.bz2
-# Source0-md5:	7ae1df29812ac27379858ffc02cfc318
+# Source0-md5:	a6b7578e887676aacee5cd48d84456d1
 Patch0:		%{name}-desktop.patch
 URL:		http://www.gnome.org/
 BuildRequires:	autoconf
@@ -15,14 +15,13 @@ BuildRequires:	gettext-devel
 BuildRequires:	gnome-doc-utils
 BuildRequires:	gtk+2-devel >= 2:2.6.3
 BuildRequires:	intltool
-BuildRequires:	libgnome-devel >= 2.10.0
+BuildRequires:	libgnome-devel >= 2.13.7
 BuildRequires:	libgnomeui-devel >= 2.10.0-2
 BuildRequires:	libtool
 BuildRequires:	pango-devel >= 1:1.8.0
 BuildRequires:	pkgconfig
 BuildRequires:	rpmbuild(macros) >= 1.197
 BuildRequires:	scrollkeeper
-Requires(post,postun):	/sbin/ldconfig
 Requires(post,postun):	scrollkeeper
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -79,7 +78,8 @@ gnome-doc-prepare --copy --force
 rm -rf $RPM_BUILD_ROOT
 
 %{__make} install \
-	DESTDIR=$RPM_BUILD_ROOT
+	DESTDIR=$RPM_BUILD_ROOT \
+	pixmapsdir="%{_pixmapsdir}"
 
 ln -sf gucharmap $RPM_BUILD_ROOT%{_bindir}/charmap
 
