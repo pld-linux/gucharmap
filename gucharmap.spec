@@ -1,12 +1,12 @@
 Summary:	Unicode character map
 Summary(pl):	Mapa znaków unikodowych
 Name:		gucharmap
-Version:	1.5.2
+Version:	1.5.3
 Release:	1
 License:	GPL v2
 Group:		X11/Applications
 Source0:	http://ftp.gnome.org/pub/gnome/sources/gucharmap/1.5/%{name}-%{version}.tar.bz2
-# Source0-md5:	a6b7578e887676aacee5cd48d84456d1
+# Source0-md5:	7eb9026fce8db2e8e82ee4a5be27eea9
 Patch0:		%{name}-desktop.patch
 URL:		http://www.gnome.org/
 BuildRequires:	autoconf
@@ -37,6 +37,7 @@ Summary(pl):	Pliki nag³ówkowe gucharmap
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
 Requires:	gtk+2-devel >= 2:2.6.3
+Requires:	hicolor-icon-theme
 Requires:	libgnomeui-devel >= 2.10.0-2
 Requires:	pango-devel >= 1:1.8.0
 
@@ -78,8 +79,7 @@ gnome-doc-prepare --copy --force
 rm -rf $RPM_BUILD_ROOT
 
 %{__make} install \
-	DESTDIR=$RPM_BUILD_ROOT \
-	pixmapsdir="%{_pixmapsdir}"
+	DESTDIR=$RPM_BUILD_ROOT
 
 ln -sf gucharmap $RPM_BUILD_ROOT%{_bindir}/charmap
 
@@ -103,7 +103,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/*charmap
 %attr(755,root,root) %{_libdir}/*.so.*.*.*
 %{_desktopdir}/*
-%{_pixmapsdir}/*
+%{_iconsdir}/hicolor/*/apps/*
 %{_omf_dest_dir}/*
 
 %files devel
