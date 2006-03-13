@@ -1,12 +1,12 @@
 Summary:	Unicode character map
 Summary(pl):	Mapa znaków unikodowych
 Name:		gucharmap
-Version:	1.5.3
+Version:	1.6.0
 Release:	1
 License:	GPL v2
 Group:		X11/Applications
-Source0:	http://ftp.gnome.org/pub/gnome/sources/gucharmap/1.5/%{name}-%{version}.tar.bz2
-# Source0-md5:	7eb9026fce8db2e8e82ee4a5be27eea9
+Source0:	http://ftp.gnome.org/pub/gnome/sources/gucharmap/1.6/%{name}-%{version}.tar.bz2
+# Source0-md5:	8af03f350c988d1565922b10776bc725
 Patch0:		%{name}-desktop.patch
 URL:		http://www.gnome.org/
 BuildRequires:	autoconf
@@ -23,6 +23,7 @@ BuildRequires:	pkgconfig
 BuildRequires:	rpmbuild(macros) >= 1.197
 BuildRequires:	scrollkeeper
 Requires(post,postun):	scrollkeeper
+Requires:	hicolor-icon-theme
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -37,7 +38,6 @@ Summary(pl):	Pliki nag³ówkowe gucharmap
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
 Requires:	gtk+2-devel >= 2:2.6.3
-Requires:	hicolor-icon-theme
 Requires:	libgnomeui-devel >= 2.10.0-2
 Requires:	pango-devel >= 1:1.8.0
 
