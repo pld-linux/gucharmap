@@ -42,7 +42,7 @@ Group:		Development/Libraries
 This package contains gucharmap library.
 
 %description libs -l pl
-Pakiet ten zawiera bibliotek^Y gucharmap.
+Pakiet ten zawiera bibliotek gucharmap.
 
 %package devel
 Summary:	Headers for gucharmap
