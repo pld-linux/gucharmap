@@ -2,7 +2,7 @@ Summary:	Unicode character map
 Summary(pl):	Mapa znaków unikodowych
 Name:		gucharmap
 Version:	1.6.0
-Release:	2
+Release:	3
 License:	GPL v2
 Group:		X11/Applications
 Source0:	http://ftp.gnome.org/pub/gnome/sources/gucharmap/1.6/%{name}-%{version}.tar.bz2
@@ -48,7 +48,7 @@ Pakiet ten zawiera bibliotek^Y gucharmap.
 Summary:	Headers for gucharmap
 Summary(pl):	Pliki nag³ówkowe gucharmap
 Group:		Development/Libraries
-Requires:	%{name}-devel = %{version}-%{release}
+Requires:	%{name}-libs = %{version}-%{release}
 Requires:	gtk+2-devel >= 2:2.6.3
 Requires:	libgnomeui-devel >= 2.10.0-2
 Requires:	pango-devel >= 1:1.8.0
