@@ -1,12 +1,12 @@
 Summary:	Unicode character map
 Summary(pl):	Mapa znaków unikodowych
 Name:		gucharmap
-Version:	1.4.4
-Release:	1
+Version:	1.6.0
+Release:	3
 License:	GPL v2
 Group:		X11/Applications
-Source0:	http://ftp.gnome.org/pub/gnome/sources/gucharmap/1.4/%{name}-%{version}.tar.bz2
-# Source0-md5:	c9741329d08908a271864664c3f2e91c
+Source0:	http://ftp.gnome.org/pub/gnome/sources/gucharmap/1.6/%{name}-%{version}.tar.bz2
+# Source0-md5:	8af03f350c988d1565922b10776bc725
 Patch0:		%{name}-desktop.patch
 URL:		http://www.gnome.org/
 BuildRequires:	autoconf
@@ -15,15 +15,16 @@ BuildRequires:	gettext-devel
 BuildRequires:	gnome-doc-utils
 BuildRequires:	gtk+2-devel >= 2:2.6.3
 BuildRequires:	intltool
-BuildRequires:	libgnome-devel >= 2.10.0
+BuildRequires:	libgnome-devel >= 2.13.7
 BuildRequires:	libgnomeui-devel >= 2.10.0-2
 BuildRequires:	libtool
 BuildRequires:	pango-devel >= 1:1.8.0
 BuildRequires:	pkgconfig
 BuildRequires:	rpmbuild(macros) >= 1.197
 BuildRequires:	scrollkeeper
-Requires(post,postun):	/sbin/ldconfig
 Requires(post,postun):	scrollkeeper
+Requires:	%{name}-libs = %{version}-%{release}
+Requires:	hicolor-icon-theme
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -32,11 +33,22 @@ Gucharmap is a featureful unicode character map.
 %description -l pl
 Gucharmap jest warto¶ciow± map± znaków unikodowych.
 
+%package libs
+Summary:	gucharmap library
+Summary(pl):	Biblioteka gucharmap
+Group:		Development/Libraries
+
+%description libs
+This package contains gucharmap library.
+
+%description libs -l pl
+Pakiet ten zawiera bibliotekê gucharmap.
+
 %package devel
 Summary:	Headers for gucharmap
 Summary(pl):	Pliki nag³ówkowe gucharmap
 Group:		Development/Libraries
-Requires:	%{name} = %{version}-%{release}
+Requires:	%{name}-libs = %{version}-%{release}
 Requires:	gtk+2-devel >= 2:2.6.3
 Requires:	libgnomeui-devel >= 2.10.0-2
 Requires:	pango-devel >= 1:1.8.0
@@ -91,20 +103,24 @@ rm -r $RPM_BUILD_ROOT%{_datadir}/locale/no
 rm -rf $RPM_BUILD_ROOT
 
 %post
-/sbin/ldconfig
 %scrollkeeper_update_post
 
 %postun
-/sbin/ldconfig
 %scrollkeeper_update_postun
+
+%post	libs -p /sbin/ldconfig
+%postun	libs -p /sbin/ldconfig
 
 %files -f %{name}.lang
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/*charmap
-%attr(755,root,root) %{_libdir}/*.so.*.*.*
 %{_desktopdir}/*
-%{_pixmapsdir}/*
+%{_iconsdir}/hicolor/*/apps/*
 %{_omf_dest_dir}/*
+
+%files libs
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/*.so.*.*.*
 
 %files devel
 %defattr(644,root,root,755)
