@@ -2,26 +2,28 @@ Summary:	Unicode character map
 Summary(pl):	Mapa znaków unikodowych
 Name:		gucharmap
 Version:	1.6.0
-Release:	4
+Release:	5
 License:	GPL v2
 Group:		X11/Applications
 Source0:	http://ftp.gnome.org/pub/gnome/sources/gucharmap/1.6/%{name}-%{version}.tar.bz2
 # Source0-md5:	8af03f350c988d1565922b10776bc725
 Patch0:		%{name}-desktop.patch
+Patch1:		%{name}-configure.patch
 URL:		http://www.gnome.org/
 BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	gettext-devel
 BuildRequires:	gnome-doc-utils
-BuildRequires:	gtk+2-devel >= 2:2.6.3
+BuildRequires:	gtk+2-devel >= 2:2.9.2
 BuildRequires:	intltool
 BuildRequires:	libgnome-devel >= 2.14.0
-BuildRequires:	libgnomeui-devel >= 2.14.0
+BuildRequires:	libgnomeui-devel >= 2.15.1
 BuildRequires:	libtool
-BuildRequires:	pango-devel >= 1:1.12.2
+BuildRequires:	pango-devel >= 1:1.13.1
 BuildRequires:	pkgconfig
 BuildRequires:	rpmbuild(macros) >= 1.197
 BuildRequires:	scrollkeeper
+Requires(post,postun):	gtk+2 >= 2:2.9.2
 Requires(post,postun):	scrollkeeper
 Requires:	%{name}-libs = %{version}-%{release}
 Requires:	hicolor-icon-theme
@@ -37,8 +39,8 @@ Gucharmap jest warto¶ciow± map± znaków unikodowych.
 Summary:	gucharmap library
 Summary(pl):	Biblioteka gucharmap
 Group:		Development/Libraries
-Requires:	libgnomeui >= 2.14.0
-Requires:	pango >= 1:1.12.2
+Requires:	libgnomeui >= 2.15.1
+Requires:	pango >= 1:1.13.1
 
 %description libs
 This package contains gucharmap library.
@@ -51,9 +53,9 @@ Summary:	Headers for gucharmap
 Summary(pl):	Pliki nag³ówkowe gucharmap
 Group:		Development/Libraries
 Requires:	%{name}-libs = %{version}-%{release}
-Requires:	gtk+2-devel >= 2:2.6.3
-Requires:	libgnomeui-devel >= 2.14.0
-Requires:	pango-devel >= 1:1.12.2
+Requires:	gtk+2-devel >= 2:2.9.2
+Requires:	libgnomeui-devel >= 2.15.1
+Requires:	pango-devel >= 1:1.13.1
 
 %description devel
 The gucharmap-devel package includes the header files that you will
@@ -78,6 +80,7 @@ Statyczna wersja bibliotek gucharmap.
 %prep
 %setup -q
 %patch0 -p1
+%patch1 -p1
 
 %build
 gnome-doc-prepare --copy --force
@@ -106,9 +109,11 @@ rm -rf $RPM_BUILD_ROOT
 
 %post
 %scrollkeeper_update_post
+gtk-update-icon-cache -qf %{_datadir}/icons/hicolor
 
 %postun
 %scrollkeeper_update_postun
+gtk-update-icon-cache -qf %{_datadir}/icons/hicolor
 
 %post	libs -p /sbin/ldconfig
 %postun	libs -p /sbin/ldconfig
