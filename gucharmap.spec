@@ -2,7 +2,7 @@ Summary:	Unicode character map
 Summary(pl):	Mapa znaków unikodowych
 Name:		gucharmap
 Version:	1.6.0
-Release:	5
+Release:	6
 License:	GPL v2
 Group:		X11/Applications
 Source0:	http://ftp.gnome.org/pub/gnome/sources/gucharmap/1.6/%{name}-%{version}.tar.bz2
@@ -14,16 +14,16 @@ BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	gettext-devel
 BuildRequires:	gnome-doc-utils
-BuildRequires:	gtk+2-devel >= 2:2.9.2
+BuildRequires:	gtk+2-devel >= 2:2.10.0
 BuildRequires:	intltool
-BuildRequires:	libgnome-devel >= 2.14.0
-BuildRequires:	libgnomeui-devel >= 2.15.1
+BuildRequires:	libgnome-devel >= 2.15.1
+BuildRequires:	libgnomeui-devel >= 2.15.2
 BuildRequires:	libtool
-BuildRequires:	pango-devel >= 1:1.13.1
+BuildRequires:	pango-devel >= 1:1.13.3
 BuildRequires:	pkgconfig
 BuildRequires:	rpmbuild(macros) >= 1.197
 BuildRequires:	scrollkeeper
-Requires(post,postun):	gtk+2 >= 2:2.9.2
+Requires(post,postun):	gtk+2 >= 2:2.10.0
 Requires(post,postun):	scrollkeeper
 Requires:	%{name}-libs = %{version}-%{release}
 Requires:	hicolor-icon-theme
@@ -39,8 +39,8 @@ Gucharmap jest warto¶ciow± map± znaków unikodowych.
 Summary:	gucharmap library
 Summary(pl):	Biblioteka gucharmap
 Group:		Development/Libraries
-Requires:	libgnomeui >= 2.15.1
-Requires:	pango >= 1:1.13.1
+Requires:	libgnomeui >= 2.15.2
+Requires:	pango >= 1:1.13.3
 
 %description libs
 This package contains gucharmap library.
@@ -53,9 +53,9 @@ Summary:	Headers for gucharmap
 Summary(pl):	Pliki nag³ówkowe gucharmap
 Group:		Development/Libraries
 Requires:	%{name}-libs = %{version}-%{release}
-Requires:	gtk+2-devel >= 2:2.9.2
-Requires:	libgnomeui-devel >= 2.15.1
-Requires:	pango-devel >= 1:1.13.1
+Requires:	gtk+2-devel >= 2:2.10.0
+Requires:	libgnomeui-devel >= 2.15.2
+Requires:	pango-devel >= 1:1.13.3
 
 %description devel
 The gucharmap-devel package includes the header files that you will
@@ -88,6 +88,7 @@ gnome-doc-prepare --copy --force
 %{__aclocal}
 %{__automake}
 %{__autoconf}
+LDFLAGS="%{rpmldflags} -Wl,--as-needed"
 %configure \
 	--enable-static
 %{__make}
