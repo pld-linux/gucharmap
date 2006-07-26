@@ -1,29 +1,28 @@
 Summary:	Unicode character map
 Summary(pl):	Mapa znaków unikodowych
 Name:		gucharmap
-Version:	1.6.0
-Release:	6
+Version:	1.7.0
+Release:	1
 License:	GPL v2
 Group:		X11/Applications
-Source0:	http://ftp.gnome.org/pub/gnome/sources/gucharmap/1.6/%{name}-%{version}.tar.bz2
-# Source0-md5:	8af03f350c988d1565922b10776bc725
+Source0:	http://ftp.gnome.org/pub/gnome/sources/gucharmap/1.7/%{name}-%{version}.tar.bz2
+# Source0-md5:	1c83ffe6044acc6f03e0d851d409c200
 Patch0:		%{name}-desktop.patch
-Patch1:		%{name}-configure.patch
 URL:		http://www.gnome.org/
 BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	gettext-devel
 BuildRequires:	gnome-doc-utils
-BuildRequires:	gtk+2-devel >= 2:2.10.0
+BuildRequires:	gtk+2-devel >= 2:2.10.1
 BuildRequires:	intltool
 BuildRequires:	libgnome-devel >= 2.15.1
-BuildRequires:	libgnomeui-devel >= 2.15.2
+BuildRequires:	libgnomeui-devel >= 2.15.90
 BuildRequires:	libtool
-BuildRequires:	pango-devel >= 1:1.13.3
+BuildRequires:	pango-devel >= 1:1.13.4
 BuildRequires:	pkgconfig
-BuildRequires:	rpmbuild(macros) >= 1.197
+BuildRequires:	rpmbuild(macros) >= 1.311
 BuildRequires:	scrollkeeper
-Requires(post,postun):	gtk+2 >= 2:2.10.0
+Requires(post,postun):	gtk+2 >= 2:2.10.1
 Requires(post,postun):	scrollkeeper
 Requires:	%{name}-libs = %{version}-%{release}
 Requires:	hicolor-icon-theme
@@ -39,8 +38,8 @@ Gucharmap jest warto¶ciow± map± znaków unikodowych.
 Summary:	gucharmap library
 Summary(pl):	Biblioteka gucharmap
 Group:		Development/Libraries
-Requires:	libgnomeui >= 2.15.2
-Requires:	pango >= 1:1.13.3
+Requires:	libgnomeui >= 2.15.90
+Requires:	pango >= 1:1.13.4
 
 %description libs
 This package contains gucharmap library.
@@ -53,9 +52,9 @@ Summary:	Headers for gucharmap
 Summary(pl):	Pliki nag³ówkowe gucharmap
 Group:		Development/Libraries
 Requires:	%{name}-libs = %{version}-%{release}
-Requires:	gtk+2-devel >= 2:2.10.0
-Requires:	libgnomeui-devel >= 2.15.2
-Requires:	pango-devel >= 1:1.13.3
+Requires:	gtk+2-devel >= 2:2.10.1
+Requires:	libgnomeui-devel >= 2.15.90
+Requires:	pango-devel >= 1:1.13.4
 
 %description devel
 The gucharmap-devel package includes the header files that you will
@@ -80,15 +79,13 @@ Statyczna wersja bibliotek gucharmap.
 %prep
 %setup -q
 %patch0 -p1
-%patch1 -p1
 
 %build
-gnome-doc-prepare --copy --force
+%{__gnome_doc_prepare}
 %{__libtoolize}
 %{__aclocal}
 %{__automake}
 %{__autoconf}
-LDFLAGS="%{rpmldflags} -Wl,--as-needed"
 %configure \
 	--enable-static
 %{__make}
@@ -110,11 +107,11 @@ rm -rf $RPM_BUILD_ROOT
 
 %post
 %scrollkeeper_update_post
-gtk-update-icon-cache -qf %{_datadir}/icons/hicolor
+%update_icon_cache hicolor
 
 %postun
 %scrollkeeper_update_postun
-gtk-update-icon-cache -qf %{_datadir}/icons/hicolor
+%update_icon_cache hicolor
 
 %post	libs -p /sbin/ldconfig
 %postun	libs -p /sbin/ldconfig
