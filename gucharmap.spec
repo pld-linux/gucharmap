@@ -2,7 +2,7 @@ Summary:	Unicode character map
 Summary(pl):	Mapa znaków unikodowych
 Name:		gucharmap
 Version:	1.7.0
-Release:	1
+Release:	2
 License:	GPL v2
 Group:		X11/Applications
 Source0:	http://ftp.gnome.org/pub/gnome/sources/gucharmap/1.7/%{name}-%{version}.tar.bz2
@@ -15,10 +15,9 @@ BuildRequires:	gettext-devel
 BuildRequires:	gnome-doc-utils
 BuildRequires:	gtk+2-devel >= 2:2.10.1
 BuildRequires:	intltool
-BuildRequires:	libgnome-devel >= 2.15.1
-BuildRequires:	libgnomeui-devel >= 2.15.90
+BuildRequires:	libgnomeui-devel >= 2.15.91
 BuildRequires:	libtool
-BuildRequires:	pango-devel >= 1:1.13.4
+BuildRequires:	pango-devel >= 1:1.14.0
 BuildRequires:	pkgconfig
 BuildRequires:	rpmbuild(macros) >= 1.311
 BuildRequires:	scrollkeeper
@@ -38,8 +37,8 @@ Gucharmap jest warto¶ciow± map± znaków unikodowych.
 Summary:	gucharmap library
 Summary(pl):	Biblioteka gucharmap
 Group:		Development/Libraries
-Requires:	libgnomeui >= 2.15.90
-Requires:	pango >= 1:1.13.4
+Requires:	libgnomeui >= 2.15.91
+Requires:	pango >= 1:1.14.0
 
 %description libs
 This package contains gucharmap library.
@@ -53,8 +52,8 @@ Summary(pl):	Pliki nag³ówkowe gucharmap
 Group:		Development/Libraries
 Requires:	%{name}-libs = %{version}-%{release}
 Requires:	gtk+2-devel >= 2:2.10.1
-Requires:	libgnomeui-devel >= 2.15.90
-Requires:	pango-devel >= 1:1.13.4
+Requires:	libgnomeui-devel >= 2.15.91
+Requires:	pango-devel >= 1:1.14.0
 
 %description devel
 The gucharmap-devel package includes the header files that you will
