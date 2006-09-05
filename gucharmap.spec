@@ -1,27 +1,27 @@
 Summary:	Unicode character map
 Summary(pl):	Mapa znaków unikodowych
 Name:		gucharmap
-Version:	1.7.0
-Release:	2
+Version:	1.8.0
+Release:	1
 License:	GPL v2
 Group:		X11/Applications
-Source0:	http://ftp.gnome.org/pub/gnome/sources/gucharmap/1.7/%{name}-%{version}.tar.bz2
-# Source0-md5:	1c83ffe6044acc6f03e0d851d409c200
+Source0:	http://ftp.gnome.org/pub/gnome/sources/gucharmap/1.8/%{name}-%{version}.tar.bz2
+# Source0-md5:	a75cc3dcc9fb3d2edecc4da936e80e3a
 Patch0:		%{name}-desktop.patch
 URL:		http://www.gnome.org/
 BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	gettext-devel
 BuildRequires:	gnome-doc-utils
-BuildRequires:	gtk+2-devel >= 2:2.10.1
+BuildRequires:	gtk+2-devel >= 2:2.10.3
 BuildRequires:	intltool
-BuildRequires:	libgnomeui-devel >= 2.15.91
+BuildRequires:	libgnomeui-devel >= 2.16.0
 BuildRequires:	libtool
-BuildRequires:	pango-devel >= 1:1.14.0
+BuildRequires:	pango-devel >= 1:1.14.3
 BuildRequires:	pkgconfig
 BuildRequires:	rpmbuild(macros) >= 1.311
 BuildRequires:	scrollkeeper
-Requires(post,postun):	gtk+2 >= 2:2.10.1
+Requires(post,postun):	gtk+2 >= 2:2.10.3
 Requires(post,postun):	scrollkeeper
 Requires:	%{name}-libs = %{version}-%{release}
 Requires:	hicolor-icon-theme
@@ -37,8 +37,8 @@ Gucharmap jest warto¶ciow± map± znaków unikodowych.
 Summary:	gucharmap library
 Summary(pl):	Biblioteka gucharmap
 Group:		Development/Libraries
-Requires:	libgnomeui >= 2.15.91
-Requires:	pango >= 1:1.14.0
+Requires:	libgnomeui >= 2.16.0
+Requires:	pango >= 1:1.14.3
 
 %description libs
 This package contains gucharmap library.
@@ -51,9 +51,9 @@ Summary:	Headers for gucharmap
 Summary(pl):	Pliki nag³ówkowe gucharmap
 Group:		Development/Libraries
 Requires:	%{name}-libs = %{version}-%{release}
-Requires:	gtk+2-devel >= 2:2.10.1
-Requires:	libgnomeui-devel >= 2.15.91
-Requires:	pango-devel >= 1:1.14.0
+Requires:	gtk+2-devel >= 2:2.10.3
+Requires:	libgnomeui-devel >= 2.16.0
+Requires:	pango-devel >= 1:1.14.3
 
 %description devel
 The gucharmap-devel package includes the header files that you will
