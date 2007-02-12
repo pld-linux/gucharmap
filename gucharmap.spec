@@ -1,5 +1,5 @@
 Summary:	Unicode character map
-Summary(pl):	Mapa znakÛw unikodowych
+Summary(pl.UTF-8):   Mapa znak√≥w unikodowych
 Name:		gucharmap
 Version:	1.8.0
 Release:	1
@@ -30,12 +30,12 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 %description
 Gucharmap is a featureful unicode character map.
 
-%description -l pl
-Gucharmap jest warto∂ciow± map± znakÛw unikodowych.
+%description -l pl.UTF-8
+Gucharmap jest warto≈õciowƒÖ mapƒÖ znak√≥w unikodowych.
 
 %package libs
 Summary:	gucharmap library
-Summary(pl):	Biblioteka gucharmap
+Summary(pl.UTF-8):   Biblioteka gucharmap
 Group:		Development/Libraries
 Requires:	libgnomeui >= 2.16.0
 Requires:	pango >= 1:1.14.3
@@ -43,12 +43,12 @@ Requires:	pango >= 1:1.14.3
 %description libs
 This package contains gucharmap library.
 
-%description libs -l pl
-Pakiet ten zawiera bibliotekÍ gucharmap.
+%description libs -l pl.UTF-8
+Pakiet ten zawiera bibliotekƒô gucharmap.
 
 %package devel
 Summary:	Headers for gucharmap
-Summary(pl):	Pliki nag≥Ûwkowe gucharmap
+Summary(pl.UTF-8):   Pliki nag≈Ç√≥wkowe gucharmap
 Group:		Development/Libraries
 Requires:	%{name}-libs = %{version}-%{release}
 Requires:	gtk+2-devel >= 2:2.10.3
@@ -59,20 +59,20 @@ Requires:	pango-devel >= 1:1.14.3
 The gucharmap-devel package includes the header files that you will
 need to use gucharmap.
 
-%description devel -l pl
-Ten pakiet zawiera pliki nag≥Ûwkowe potrzebne do kompilacji programÛw
-uøywaj±cych gucharmap.
+%description devel -l pl.UTF-8
+Ten pakiet zawiera pliki nag≈Ç√≥wkowe potrzebne do kompilacji program√≥w
+u≈ºywajƒÖcych gucharmap.
 
 %package static
 Summary:	Static gucharmap libraries
-Summary(pl):	Statyczne biblioteki gucharmap
+Summary(pl.UTF-8):   Statyczne biblioteki gucharmap
 Group:		Development/Libraries
 Requires:	%{name}-devel = %{version}-%{release}
 
 %description static
 Static version of gucharmap libraries.
 
-%description static -l pl
+%description static -l pl.UTF-8
 Statyczna wersja bibliotek gucharmap.
 
 %prep
