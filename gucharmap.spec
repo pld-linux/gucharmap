@@ -1,5 +1,5 @@
 Summary:	Unicode character map
-Summary(pl.UTF-8):   Mapa znaków unikodowych
+Summary(pl.UTF-8):	Mapa znaków unikodowych
 Name:		gucharmap
 Version:	1.8.0
 Release:	1
@@ -35,7 +35,7 @@ Gucharmap jest wartościową mapą znaków unikodowych.
 
 %package libs
 Summary:	gucharmap library
-Summary(pl.UTF-8):   Biblioteka gucharmap
+Summary(pl.UTF-8):	Biblioteka gucharmap
 Group:		Development/Libraries
 Requires:	libgnomeui >= 2.16.0
 Requires:	pango >= 1:1.14.3
@@ -48,7 +48,7 @@ Pakiet ten zawiera bibliotekę gucharmap.
 
 %package devel
 Summary:	Headers for gucharmap
-Summary(pl.UTF-8):   Pliki nagłówkowe gucharmap
+Summary(pl.UTF-8):	Pliki nagłówkowe gucharmap
 Group:		Development/Libraries
 Requires:	%{name}-libs = %{version}-%{release}
 Requires:	gtk+2-devel >= 2:2.10.3
@@ -65,7 +65,7 @@ używających gucharmap.
 
 %package static
 Summary:	Static gucharmap libraries
-Summary(pl.UTF-8):   Statyczne biblioteki gucharmap
+Summary(pl.UTF-8):	Statyczne biblioteki gucharmap
 Group:		Development/Libraries
 Requires:	%{name}-devel = %{version}-%{release}
 
