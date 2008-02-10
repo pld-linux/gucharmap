@@ -1,30 +1,31 @@
 Summary:	Unicode character map
 Summary(pl.UTF-8):	Mapa znaków unikodowych
 Name:		gucharmap
-Version:	2.21.5
+Version:	2.21.90
 Release:	1
 License:	GPL v2
 Group:		X11/Applications
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/gucharmap/2.21/%{name}-%{version}.tar.bz2
-# Source0-md5:	10c0c2d624b620dbc0c890ef50c297f5
-Patch0:		%{name}-desktop.patch
+# Source0-md5:	2ea951a946aff86a0ee77b8b1ffffabc
 URL:		http://www.gnome.org/
+BuildRequires:	GConf2-devel >= 2.21.90
 BuildRequires:	autoconf >= 2.56
 BuildRequires:	automake >= 1:1.9
 BuildRequires:	gettext-devel
+BuildRequires:	gnome-common >= 2.20.0
 BuildRequires:	gnome-doc-utils >= 0.12.0
-BuildRequires:	gtk+2-devel >= 2:2.12.0
-BuildRequires:	intltool >= 0.36.2
-BuildRequires:	libgnomeui-devel >= 2.19.1
+BuildRequires:	gtk+2-devel >= 2:2.12.5
+BuildRequires:	intltool >= 0.37.0
 BuildRequires:	libtool
-BuildRequires:	pango-devel >= 1:1.18.2
 BuildRequires:	pkgconfig
+BuildRequires:	rpmbuild(find_lang) >= 1.23
 BuildRequires:	rpmbuild(macros) >= 1.311
 BuildRequires:	scrollkeeper
-Requires(post,preun):	GConf2
+BuildRequires:	sed >= 4.0
 Requires(post,postun):	gtk+2
 Requires(post,postun):	hicolor-icon-theme
 Requires(post,postun):	scrollkeeper
+Requires(post,preun):	GConf2
 Requires:	%{name}-libs = %{version}-%{release}
 # sr@Latn vs. sr@latin
 Conflicts:	glibc-misc < 6:2.7
@@ -39,9 +40,8 @@ Gucharmap jest wartościową mapą znaków unikodowych.
 %package libs
 Summary:	gucharmap library
 Summary(pl.UTF-8):	Biblioteka gucharmap
-Group:		Development/Libraries
-Requires:	libgnomeui >= 2.19.1
-Requires:	pango >= 1:1.18.2
+Group:		X11/Libraries
+Requires:	pango >= 1:1.18.4
 
 %description libs
 This package contains gucharmap library.
@@ -52,11 +52,10 @@ Pakiet ten zawiera bibliotekę gucharmap.
 %package devel
 Summary:	Headers for gucharmap
 Summary(pl.UTF-8):	Pliki nagłówkowe gucharmap
-Group:		Development/Libraries
+Group:		X11/Development/Libraries
 Requires:	%{name}-libs = %{version}-%{release}
-Requires:	gtk+2-devel >= 2:2.12.0
-Requires:	libgnomeui-devel >= 2.19.1
-Requires:	pango-devel >= 1:1.18.2
+Requires:	GConf2-devel >= 2.21.90
+Requires:	gtk+2-devel >= 2:2.12.5
 
 %description devel
 The gucharmap-devel package includes the header files that you will
@@ -69,7 +68,7 @@ używających gucharmap.
 %package static
 Summary:	Static gucharmap libraries
 Summary(pl.UTF-8):	Statyczne biblioteki gucharmap
-Group:		Development/Libraries
+Group:		X11/Development/Libraries
 Requires:	%{name}-devel = %{version}-%{release}
 
 %description static
@@ -80,7 +79,9 @@ Statyczna wersja bibliotek gucharmap.
 
 %prep
 %setup -q
-%patch0 -p1
+
+sed -i -e 's#sr@Latn#sr@latin#' po/LINGUAS
+mv po/sr@{Latn,latin}.po
 
 %build
 %{__gnome_doc_prepare}
@@ -89,6 +90,7 @@ Statyczna wersja bibliotek gucharmap.
 %{__libtoolize}
 %{__aclocal}
 %{__automake}
+%{__autoheader}
 %{__autoconf}
 %configure \
 	--enable-static
@@ -100,9 +102,7 @@ rm -rf $RPM_BUILD_ROOT
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
 
-[ -d $RPM_BUILD_ROOT%{_datadir}/locale/sr@latin ] || \
-	mv -f $RPM_BUILD_ROOT%{_datadir}/locale/sr@{Latn,latin}
-%find_lang %{name} --with-gnome
+%find_lang %{name} --with-gnome --with-omf
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -128,21 +128,21 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/gucharmap
 %attr(755,root,root) %{_bindir}/gnome-character-map
 %{_sysconfdir}/gconf/schemas/gucharmap.schemas
-%{_desktopdir}/*.desktop
+%{_desktopdir}/gucharmap.desktop
 %{_iconsdir}/hicolor/*/apps/*
-%{_omf_dest_dir}/*
 
 %files libs
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/*.so.*.*.*
+%attr(755,root,root) %{_libdir}/libgucharmap.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/libgucharmap.so.6
 
 %files devel
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/*.so
-%{_libdir}/*.la
-%{_includedir}/%{name}
-%{_pkgconfigdir}/*
+%attr(755,root,root) %{_libdir}/libgucharmap.so
+%{_libdir}/libgucharmap.la
+%{_includedir}/gucharmap
+%{_pkgconfigdir}/gucharmap.pc
 
 %files static
 %defattr(644,root,root,755)
-%{_libdir}/*.a
+%{_libdir}/libgucharmap.a
