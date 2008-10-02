@@ -1,12 +1,12 @@
 Summary:	Unicode character map
 Summary(pl.UTF-8):	Mapa znaków unikodowych
 Name:		gucharmap
-Version:	2.22.3
+Version:	2.24.0
 Release:	1
 License:	GPL v2
 Group:		X11/Applications
-Source0:	http://ftp.gnome.org/pub/GNOME/sources/gucharmap/2.22/%{name}-%{version}.tar.bz2
-# Source0-md5:	f57290934466fda80eb883f77c0a2ff1
+Source0:	http://ftp.gnome.org/pub/GNOME/sources/gucharmap/2.24/%{name}-%{version}.tar.bz2
+# Source0-md5:	5dc5f1af56a5bd1a525125b315708d86
 URL:		http://www.gnome.org/
 BuildRequires:	GConf2-devel >= 2.22.0
 BuildRequires:	autoconf >= 2.56
@@ -23,7 +23,6 @@ BuildRequires:	rpmbuild(macros) >= 1.311
 BuildRequires:	scrollkeeper
 BuildRequires:	sed >= 4.0
 Requires(post,postun):	gtk+2
-Requires(post,postun):	hicolor-icon-theme
 Requires(post,postun):	scrollkeeper
 Requires(post,preun):	GConf2
 Requires:	%{name}-libs = %{version}-%{release}
@@ -80,15 +79,12 @@ Statyczna wersja bibliotek gucharmap.
 %prep
 %setup -q
 
-sed -i -e 's#sr@Latn#sr@latin#' po/LINGUAS
-mv po/sr@{Latn,latin}.po
-
 %build
 %{__gnome_doc_prepare}
 %{__glib_gettextize}
 %{__intltoolize}
 %{__libtoolize}
-%{__aclocal}
+%{__aclocal} -I m4
 %{__automake}
 %{__autoheader}
 %{__autoconf}
@@ -110,14 +106,12 @@ rm -rf $RPM_BUILD_ROOT
 %post
 %gconf_schema_install gucharmap.schemas
 %scrollkeeper_update_post
-%update_icon_cache hicolor
 
 %preun
 %gconf_schema_uninstall gucharmap.schemas
 
 %postun
 %scrollkeeper_update_postun
-%update_icon_cache hicolor
 
 %post	libs -p /sbin/ldconfig
 %postun	libs -p /sbin/ldconfig
@@ -129,19 +123,18 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/gnome-character-map
 %{_sysconfdir}/gconf/schemas/gucharmap.schemas
 %{_desktopdir}/gucharmap.desktop
-%{_iconsdir}/hicolor/*/apps/*
 
 %files libs
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libgucharmap.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libgucharmap.so.6
+%attr(755,root,root) %ghost %{_libdir}/libgucharmap.so.7
 
 %files devel
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libgucharmap.so
 %{_libdir}/libgucharmap.la
-%{_includedir}/gucharmap
-%{_pkgconfigdir}/gucharmap.pc
+%{_includedir}/gucharmap-2
+%{_pkgconfigdir}/gucharmap-2.pc
 
 %files static
 %defattr(644,root,root,755)
