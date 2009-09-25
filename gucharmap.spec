@@ -1,13 +1,13 @@
 Summary:	Unicode character map
 Summary(pl.UTF-8):	Mapa znaków unikodowych
 Name:		gucharmap
-Version:	2.26.3.1
+Version:	2.28.0
 Release:	1
 License:	GPL v2
 Group:		X11/Applications
-Source0:	http://ftp.gnome.org/pub/GNOME/sources/gucharmap/2.26/%{name}-%{version}.tar.bz2
-# Source0-md5:	3d13ad452860b1facc9765713bc96d33
-URL:		http://www.gnome.org/
+Source0:	http://ftp.gnome.org/pub/GNOME/sources/gucharmap/2.28/%{name}-%{version}.tar.bz2
+# Source0-md5:	c358564da35d7bc93b99d826b4d28f7c
+URL:		http://live.gnome.org/Gucharmap
 BuildRequires:	GConf2-devel >= 2.24.0
 BuildRequires:	autoconf >= 2.56
 BuildRequires:	automake >= 1:1.9
@@ -88,6 +88,7 @@ Statyczna wersja bibliotek gucharmap.
 %{__autoheader}
 %{__autoconf}
 %configure \
+	--disable-scrollkeeper \
 	--enable-static
 %{__make}
 
@@ -96,6 +97,8 @@ rm -rf $RPM_BUILD_ROOT
 
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
+
+rm -rf $RPM_BUILD_ROOT%{_datadir}/locale/ca@valencia
 
 %find_lang %{name} --with-gnome --with-omf
 
