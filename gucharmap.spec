@@ -1,12 +1,12 @@
 Summary:	Unicode character map
 Summary(pl.UTF-8):	Mapa znaków unikodowych
 Name:		gucharmap
-Version:	2.28.2
-Release:	2
+Version:	2.29.92
+Release:	1
 License:	GPL v2
 Group:		X11/Applications
-Source0:	http://ftp.gnome.org/pub/GNOME/sources/gucharmap/2.28/%{name}-%{version}.tar.bz2
-# Source0-md5:	d4ff2195141ca71aebfeb766e18d9607
+Source0:	http://ftp.gnome.org/pub/GNOME/sources/gucharmap/2.29/%{name}-%{version}.tar.bz2
+# Source0-md5:	bf9ace30cdfb54a702924324a0612929
 URL:		http://live.gnome.org/Gucharmap
 BuildRequires:	GConf2-devel >= 2.24.0
 BuildRequires:	autoconf >= 2.56
@@ -15,7 +15,8 @@ BuildRequires:	docbook-dtd412-xml
 BuildRequires:	gettext-devel
 BuildRequires:	gnome-common >= 2.24.0
 BuildRequires:	gnome-doc-utils >= 0.12.2
-BuildRequires:	gtk+2-devel >= 2:2.14.0
+BuildRequires:	gtk+2-devel >= 2:2.18.0
+BuildRequires:	gtk-doc >= 1.0
 BuildRequires:	intltool >= 0.40.0
 BuildRequires:	libtool
 BuildRequires:	libxml2-progs
@@ -55,7 +56,7 @@ Summary(pl.UTF-8):	Pliki nagłówkowe gucharmap
 Group:		X11/Development/Libraries
 Requires:	%{name}-libs = %{version}-%{release}
 Requires:	GConf2-devel >= 2.24.0
-Requires:	gtk+2-devel >= 2:2.14.0
+Requires:	gtk+2-devel >= 2:2.18.0
 
 %description devel
 The gucharmap-devel package includes the header files that you will
@@ -77,8 +78,22 @@ Static version of gucharmap libraries.
 %description static -l pl.UTF-8
 Statyczna wersja bibliotek gucharmap.
 
+%package apidocs
+Summary:	gucharmap library API documentation
+Summary(pl.UTF-8):	Dokumentacja API biblioteki gucharmap
+Group:		Documentation
+Requires:	gtk-doc-common
+
+%description apidocs
+gucharmap library API documentation.
+
+%description apidocs -l pl.UTF-8
+Dokumentacja API biblioteki gucharmap.
+
 %prep
 %setup -q
+%{__sed} -i -e 's/^en@shaw//' po/LINGUAS
+%{__rm} -f po/en@shaw.po
 
 %build
 %{__gnome_doc_prepare}
@@ -91,6 +106,8 @@ Statyczna wersja bibliotek gucharmap.
 %{__autoconf}
 %configure \
 	--disable-scrollkeeper \
+	--enable-gtk-doc \
+	--with-html-dir=%{_gtkdocdir} \
 	--enable-static
 %{__make}
 
@@ -141,3 +158,7 @@ rm -rf $RPM_BUILD_ROOT
 %files static
 %defattr(644,root,root,755)
 %{_libdir}/libgucharmap.a
+
+%files apidocs
+%defattr(644,root,root,755)
+%{_gtkdocdir}/gucharmap
