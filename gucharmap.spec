@@ -1,12 +1,12 @@
 Summary:	Unicode character map
 Summary(pl.UTF-8):	Mapa znaków unikodowych
 Name:		gucharmap
-Version:	2.30.2
+Version:	2.32.0
 Release:	1
 License:	GPL v2
 Group:		X11/Applications
-Source0:	http://ftp.gnome.org/pub/GNOME/sources/gucharmap/2.30/%{name}-%{version}.tar.bz2
-# Source0-md5:	f997f6e6ba970fef7ec704da06e2de80
+Source0:	http://ftp.gnome.org/pub/GNOME/sources/gucharmap/2.32/%{name}-%{version}.tar.bz2
+# Source0-md5:	1a2eb13af8e2c51a811b96748378d351
 URL:		http://live.gnome.org/Gucharmap
 BuildRequires:	GConf2-devel >= 2.24.0
 BuildRequires:	autoconf >= 2.56
@@ -153,7 +153,7 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libgucharmap.so
 %{_libdir}/libgucharmap.la
-%{_includedir}/gucharmap-2
+%{_includedir}/gucharmap-2.0
 %{_pkgconfigdir}/gucharmap-2.pc
 
 %files static
@@ -162,4 +162,4 @@ rm -rf $RPM_BUILD_ROOT
 
 %files apidocs
 %defattr(644,root,root,755)
-%{_gtkdocdir}/gucharmap
+%{_gtkdocdir}/gucharmap-2.0
