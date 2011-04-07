@@ -1,21 +1,24 @@
 Summary:	Unicode character map
 Summary(pl.UTF-8):	Mapa znaków unikodowych
 Name:		gucharmap
-Version:	2.32.1
-Release:	2
+Version:	3.0.0
+Release:	1
 License:	GPL v2
 Group:		X11/Applications
-Source0:	http://ftp.gnome.org/pub/GNOME/sources/gucharmap/2.32/%{name}-%{version}.tar.bz2
-# Source0-md5:	84327620a0234fa26c0a08fefea2aec8
+Source0:	http://ftp.gnome.org/pub/GNOME/sources/gucharmap/3.0/%{name}-%{version}.tar.bz2
+# Source0-md5:	161f1ce0ca6550036eb86f22f7ac585a
 URL:		http://live.gnome.org/Gucharmap
 BuildRequires:	GConf2-devel >= 2.24.0
 BuildRequires:	autoconf >= 2.56
-BuildRequires:	automake >= 1:1.9
+BuildRequires:	automake >= 1:1.11
 BuildRequires:	docbook-dtd412-xml
 BuildRequires:	gettext-devel
+BuildRequires:	glib2-devel >= 1:2.28.0
 BuildRequires:	gnome-common >= 2.24.0
 BuildRequires:	gnome-doc-utils >= 0.12.2
+BuildRequires:	gobject-introspection-devel >= 0.9.0
 BuildRequires:	gtk+2-devel >= 2:2.18.0
+BuildRequires:	gtk+3-devel >= 3.0.0
 BuildRequires:	gtk-doc >= 1.0
 BuildRequires:	intltool >= 0.40.0
 BuildRequires:	libtool
@@ -56,7 +59,7 @@ Summary(pl.UTF-8):	Pliki nagłówkowe gucharmap
 Group:		X11/Development/Libraries
 Requires:	%{name}-libs = %{version}-%{release}
 Requires:	GConf2-devel >= 2.24.0
-Requires:	gtk+2-devel >= 2:2.18.0
+Requires:	gtk+3-devel >= 3.0.0
 
 %description devel
 The gucharmap-devel package includes the header files that you will
@@ -90,10 +93,60 @@ gucharmap library API documentation.
 %description apidocs -l pl.UTF-8
 Dokumentacja API biblioteki gucharmap.
 
+%package -n gucharmap2-libs
+Summary:	gucharmap library
+Summary(pl.UTF-8):	Biblioteka gucharmap
+Group:		X11/Libraries
+Requires:	pango >= 1:1.20.0
+
+%description -n gucharmap2-libs
+This package contains gucharmap library.
+
+%description -n gucharmap2-libs -l pl.UTF-8
+Pakiet ten zawiera bibliotekę gucharmap.
+
+%package -n gucharmap2-devel
+Summary:	Headers for gucharmap
+Summary(pl.UTF-8):	Pliki nagłówkowe gucharmap
+Group:		X11/Development/Libraries
+Requires:	gucharmap2-libs = %{version}-%{release}
+Requires:	GConf2-devel >= 2.24.0
+Requires:	gtk+2-devel >= 2:2.18.0
+
+%description -n gucharmap2-devel
+The gucharmap-devel package includes the header files that you will
+need to use gucharmap.
+
+%description -n gucharmap2-devel -l pl.UTF-8
+Ten pakiet zawiera pliki nagłówkowe potrzebne do kompilacji programów
+używających gucharmap.
+
+%package -n gucharmap2-static
+Summary:	Static gucharmap libraries
+Summary(pl.UTF-8):	Statyczne biblioteki gucharmap
+Group:		X11/Development/Libraries
+Requires:	gucharmap2-devel = %{version}-%{release}
+
+%description -n gucharmap2-static
+Static version of gucharmap libraries.
+
+%description -n gucharmap2-static -l pl.UTF-8
+Statyczna wersja bibliotek gucharmap.
+
+%package -n gucharmap2-apidocs
+Summary:	gucharmap library API documentation
+Summary(pl.UTF-8):	Dokumentacja API biblioteki gucharmap
+Group:		Documentation
+Requires:	gtk-doc-common
+
+%description -n gucharmap2-apidocs
+gucharmap library API documentation.
+
+%description -n gucharmap2-apidocs -l pl.UTF-8
+Dokumentacja API biblioteki gucharmap.
+
 %prep
 %setup -q
-%{__sed} -i -e 's/^en@shaw//' po/LINGUAS
-%{__rm} -f po/en@shaw.po
 
 %build
 %{__gnome_doc_prepare}
@@ -104,19 +157,37 @@ Dokumentacja API biblioteki gucharmap.
 %{__automake}
 %{__autoheader}
 %{__autoconf}
-%configure \
-	--disable-silent-rules \
+COMMON_ARGS="--disable-silent-rules \
 	--disable-scrollkeeper \
+	--enable-introspection \
 	--enable-gtk-doc \
 	--with-html-dir=%{_gtkdocdir} \
-	--enable-static
+	--enable-static"
+mkdir gtk{2,3}
+cd gtk2
+../%configure \
+	--with-gtk=2.0 \
+	$COMMON_ARGS
 %{__make}
+cd ../gtk3
+../%configure \
+	--with-gtk=3.0 \
+	$COMMON_ARGS
+%{__make}
+cd ..
 
 %install
 rm -rf $RPM_BUILD_ROOT
 
+cd gtk2
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
+cd ../gtk3
+%{__make} install \
+	DESTDIR=$RPM_BUILD_ROOT
+cd ..
+
+%{__rm} $RPM_BUILD_ROOT%{_libdir}/*.la
 
 %find_lang %{name} --with-gnome --with-omf
 
@@ -136,6 +207,9 @@ rm -rf $RPM_BUILD_ROOT
 %post	libs -p /sbin/ldconfig
 %postun	libs -p /sbin/ldconfig
 
+%post	-n gucharmap2-libs -p /sbin/ldconfig
+%postun	-n gucharmap2-libs -p /sbin/ldconfig
+
 %files -f %{name}.lang
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/charmap
@@ -146,20 +220,43 @@ rm -rf $RPM_BUILD_ROOT
 
 %files libs
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/libgucharmap.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libgucharmap.so.7
+%attr(755,root,root) %{_libdir}/libgucharmap_2_90.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/libgucharmap_2_90.so.7
+%{_libdir}/girepository-1.0/Gucharmap-2.90.typelib
+
 
 %files devel
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/libgucharmap.so
-%{_libdir}/libgucharmap.la
-%{_includedir}/gucharmap-2.0
-%{_pkgconfigdir}/gucharmap-2.pc
+%attr(755,root,root) %{_libdir}/libgucharmap_2_90.so
+%{_includedir}/gucharmap-2.90
+%{_pkgconfigdir}/gucharmap-2.90.pc
+%{_datadir}/gir-1.0/Gucharmap-2.90.gir
 
 %files static
 %defattr(644,root,root,755)
-%{_libdir}/libgucharmap.a
+%{_libdir}/libgucharmap_2_90.a
 
 %files apidocs
+%defattr(644,root,root,755)
+%{_gtkdocdir}/gucharmap-2.90
+
+%files -n gucharmap2-libs
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/libgucharmap.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/libgucharmap.so.7
+%{_libdir}/girepository-1.0/Gucharmap-2.0.typelib
+
+%files -n gucharmap2-devel
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/libgucharmap.so
+%{_includedir}/gucharmap-2.0
+%{_pkgconfigdir}/gucharmap-2.pc
+%{_datadir}/gir-1.0/Gucharmap-2.0.gir
+
+%files -n gucharmap2-static
+%defattr(644,root,root,755)
+%{_libdir}/libgucharmap.a
+
+%files -n gucharmap2-apidocs
 %defattr(644,root,root,755)
 %{_gtkdocdir}/gucharmap-2.0
