@@ -109,9 +109,9 @@ Pakiet ten zawiera bibliotekę gucharmap.
 Summary:	Headers for gucharmap
 Summary(pl.UTF-8):	Pliki nagłówkowe gucharmap
 Group:		X11/Development/Libraries
-Requires:	gucharmap2-libs = %{version}-%{release}
 Requires:	GConf2-devel >= 2.24.0
 Requires:	gtk+2-devel >= 2:2.18.0
+Requires:	gucharmap2-libs = %{version}-%{release}
 
 %description -n gucharmap2-devel
 The gucharmap-devel package includes the header files that you will
