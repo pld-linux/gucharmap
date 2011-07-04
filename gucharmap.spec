@@ -42,20 +42,20 @@ Gucharmap is a featureful unicode character map.
 Gucharmap jest wartościową mapą znaków unikodowych.
 
 %package libs
-Summary:	gucharmap library
-Summary(pl.UTF-8):	Biblioteka gucharmap
+Summary:	gucharmap library for GTK+ 3
+Summary(pl.UTF-8):	Biblioteka gucharmap dla GTK+ 3
 Group:		X11/Libraries
 Requires:	pango >= 1:1.20.0
 
 %description libs
-This package contains gucharmap library.
+This package contains gucharmap library for GTK+ 3.
 
 %description libs -l pl.UTF-8
-Pakiet ten zawiera bibliotekę gucharmap.
+Pakiet ten zawiera bibliotekę gucharmap dla GTK+ 3.
 
 %package devel
-Summary:	Headers for gucharmap
-Summary(pl.UTF-8):	Pliki nagłówkowe gucharmap
+Summary:	Headers for gucharmap (GTK+ 3 verson)
+Summary(pl.UTF-8):	Pliki nagłówkowe gucharmap (wersja dla GTK+ 3)
 Group:		X11/Development/Libraries
 Requires:	%{name}-libs = %{version}-%{release}
 Requires:	GConf2-devel >= 2.24.0
@@ -63,51 +63,51 @@ Requires:	gtk+3-devel >= 3.0.0
 
 %description devel
 The gucharmap-devel package includes the header files that you will
-need to use gucharmap.
+need to use gucharmap. This version is targeted for GTK+ 3.
 
 %description devel -l pl.UTF-8
 Ten pakiet zawiera pliki nagłówkowe potrzebne do kompilacji programów
-używających gucharmap.
+używających gucharmap. Ta wersja jest przeznaczona dla GTK+ 3.
 
 %package static
-Summary:	Static gucharmap libraries
-Summary(pl.UTF-8):	Statyczne biblioteki gucharmap
+Summary:	Static gucharmap library for GTK+ 3
+Summary(pl.UTF-8):	Statyczna biblioteka gucharmap dla GTK+ 3
 Group:		X11/Development/Libraries
 Requires:	%{name}-devel = %{version}-%{release}
 
 %description static
-Static version of gucharmap libraries.
+Static version of gucharmap library for GTK+ 3.
 
 %description static -l pl.UTF-8
-Statyczna wersja bibliotek gucharmap.
+Statyczna wersja biblioteki gucharmap dla GTK+ 3.
 
 %package apidocs
-Summary:	gucharmap library API documentation
-Summary(pl.UTF-8):	Dokumentacja API biblioteki gucharmap
+Summary:	gucharmap library API documentation (GTK+ 3 version)
+Summary(pl.UTF-8):	Dokumentacja API biblioteki gucharmap (wersja dla GTK+ 3)
 Group:		Documentation
 Requires:	gtk-doc-common
 
 %description apidocs
-gucharmap library API documentation.
+gucharmap library API documentation (GTK+ 3 version).
 
 %description apidocs -l pl.UTF-8
-Dokumentacja API biblioteki gucharmap.
+Dokumentacja API biblioteki gucharmap (wersja dla GTK+ 3).
 
 %package -n gucharmap2-libs
-Summary:	gucharmap library
-Summary(pl.UTF-8):	Biblioteka gucharmap
+Summary:	gucharmap library (GTK+ 2 version)
+Summary(pl.UTF-8):	Biblioteka gucharmap (wersja dla GTK+ 2)
 Group:		X11/Libraries
 Requires:	pango >= 1:1.20.0
 
 %description -n gucharmap2-libs
-This package contains gucharmap library.
+This package contains gucharmap library for GTK+ 2.
 
 %description -n gucharmap2-libs -l pl.UTF-8
-Pakiet ten zawiera bibliotekę gucharmap.
+Pakiet ten zawiera bibliotekę gucharmap dla GTK+ 2.
 
 %package -n gucharmap2-devel
-Summary:	Headers for gucharmap
-Summary(pl.UTF-8):	Pliki nagłówkowe gucharmap
+Summary:	Headers for gucharmap (GTK+ 2 version)
+Summary(pl.UTF-8):	Pliki nagłówkowe gucharmap (wersja dla GTK+ 2)
 Group:		X11/Development/Libraries
 Requires:	GConf2-devel >= 2.24.0
 Requires:	gtk+2-devel >= 2:2.18.0
@@ -115,35 +115,35 @@ Requires:	gucharmap2-libs = %{version}-%{release}
 
 %description -n gucharmap2-devel
 The gucharmap-devel package includes the header files that you will
-need to use gucharmap.
+need to use gucharmap. This version is targeted for GTK+ 2.
 
 %description -n gucharmap2-devel -l pl.UTF-8
 Ten pakiet zawiera pliki nagłówkowe potrzebne do kompilacji programów
-używających gucharmap.
+używających gucharmap. Ta wersja jest przeznaczona dla GTK+ 2.
 
 %package -n gucharmap2-static
-Summary:	Static gucharmap libraries
-Summary(pl.UTF-8):	Statyczne biblioteki gucharmap
+Summary:	Static gucharmap library for GTK+ 2
+Summary(pl.UTF-8):	Statyczna biblioteka gucharmap dla GTK+ 2
 Group:		X11/Development/Libraries
 Requires:	gucharmap2-devel = %{version}-%{release}
 
 %description -n gucharmap2-static
-Static version of gucharmap libraries.
+Static version of gucharmap library for GTK+ 2.
 
 %description -n gucharmap2-static -l pl.UTF-8
-Statyczna wersja bibliotek gucharmap.
+Statyczna wersja biblioteki gucharmap dla GTK+ 2.
 
 %package -n gucharmap2-apidocs
-Summary:	gucharmap library API documentation
-Summary(pl.UTF-8):	Dokumentacja API biblioteki gucharmap
+Summary:	gucharmap library API documentation (GTK+ 2 version)
+Summary(pl.UTF-8):	Dokumentacja API biblioteki gucharmap (wersja dla GTK+ 2)
 Group:		Documentation
 Requires:	gtk-doc-common
 
 %description -n gucharmap2-apidocs
-gucharmap library API documentation.
+gucharmap library API documentation (GTK+ 2 version).
 
 %description -n gucharmap2-apidocs -l pl.UTF-8
-Dokumentacja API biblioteki gucharmap.
+Dokumentacja API biblioteki gucharmap (wersja dla GTK+ 2).
 
 %prep
 %setup -q
@@ -179,13 +179,10 @@ cd ..
 %install
 rm -rf $RPM_BUILD_ROOT
 
-cd gtk2
-%{__make} install \
+%{__make} -C gtk2 install \
 	DESTDIR=$RPM_BUILD_ROOT
-cd ../gtk3
-%{__make} install \
+%{__make} -C gtk3 install \
 	DESTDIR=$RPM_BUILD_ROOT
-cd ..
 
 %{__rm} $RPM_BUILD_ROOT%{_libdir}/*.la
 
@@ -223,7 +220,6 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/libgucharmap_2_90.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/libgucharmap_2_90.so.7
 %{_libdir}/girepository-1.0/Gucharmap-2.90.typelib
-
 
 %files devel
 %defattr(644,root,root,755)
