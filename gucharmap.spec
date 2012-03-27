@@ -1,14 +1,13 @@
 Summary:	Unicode character map
 Summary(pl.UTF-8):	Mapa znaków unikodowych
 Name:		gucharmap
-Version:	3.2.2
+Version:	3.4.0.1
 Release:	1
 License:	GPL v2
 Group:		X11/Applications
-Source0:	http://ftp.gnome.org/pub/GNOME/sources/gucharmap/3.2/%{name}-%{version}.tar.xz
-# Source0-md5:	f2cda38f8bc65acf0e9eac1e9805d8ae
+Source0:	http://ftp.gnome.org/pub/GNOME/sources/gucharmap/3.4/%{name}-%{version}.tar.xz
+# Source0-md5:	acecefb74371cf1405fea7b831af27a3
 URL:		http://live.gnome.org/Gucharmap
-BuildRequires:	GConf2-devel >= 2.24.0
 BuildRequires:	autoconf >= 2.56
 BuildRequires:	automake >= 1:1.11
 BuildRequires:	docbook-dtd412-xml
@@ -30,7 +29,7 @@ BuildRequires:	tar >= 1:1.22
 BuildRequires:	xz
 Requires(post,postun):	gtk-update-icon-cache
 Requires(post,postun):	scrollkeeper
-Requires(post,preun):	GConf2
+Requires(post,preun):	glib2 >= 1:2.26.0
 Requires:	%{name}-libs = %{version}-%{release}
 # sr@Latn vs. sr@latin
 Conflicts:	glibc-misc < 6:2.7
@@ -59,7 +58,6 @@ Summary:	Headers for gucharmap (GTK+ 3 verson)
 Summary(pl.UTF-8):	Pliki nagłówkowe gucharmap (wersja dla GTK+ 3)
 Group:		X11/Development/Libraries
 Requires:	%{name}-libs = %{version}-%{release}
-Requires:	GConf2-devel >= 2.24.0
 Requires:	gtk+3-devel >= 3.0.0
 
 %description devel
@@ -107,7 +105,7 @@ Dokumentacja API biblioteki gucharmap (wersja dla GTK+ 3).
 %{__autoheader}
 %{__autoconf}
 %configure \
-	 --disable-silent-rules \
+	--disable-silent-rules \
 	--disable-scrollkeeper \
 	--enable-introspection \
 	--enable-gtk-doc \
@@ -129,13 +127,11 @@ rm -rf $RPM_BUILD_ROOT
 rm -rf $RPM_BUILD_ROOT
 
 %post
-%gconf_schema_install gucharmap.schemas
+%glib_compile_schemas
 %scrollkeeper_update_post
 
-%preun
-%gconf_schema_uninstall gucharmap.schemas
-
 %postun
+%glib_compile_schemas
 %scrollkeeper_update_postun
 
 %post	libs -p /sbin/ldconfig
@@ -146,8 +142,9 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/charmap
 %attr(755,root,root) %{_bindir}/gucharmap
 %attr(755,root,root) %{_bindir}/gnome-character-map
-%{_sysconfdir}/gconf/schemas/gucharmap.schemas
 %{_desktopdir}/gucharmap.desktop
+%{_datadir}/glib-2.0/schemas/org.gnome.Charmap.enums.xml
+%{_datadir}/glib-2.0/schemas/org.gnome.Charmap.gschema.xml
 
 %files libs
 %defattr(644,root,root,755)
