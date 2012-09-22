@@ -1,0 +1,9 @@
+--- gucharmap-3.4.1.1/docs/reference/gucharmap-docs.sgml.orig	2011-12-10 20:39:46.000000000 +0100
++++ gucharmap-3.4.1.1/docs/reference/gucharmap-docs.sgml	2012-09-22 18:21:53.242132183 +0200
+@@ -22,6 +22,5 @@
+     <xi:include href="xml/gucharmap-chapters-view.xml"/>
+     <xi:include href="xml/gucharmap-charmap.xml"/>
+     <xi:include href="xml/gucharmap-unicode-info.xml"/>
+-    <xi:include href="xml/gucharmap.xml"/>
+   </chapter>
+ </book>

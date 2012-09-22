@@ -3,10 +3,11 @@ Summary(pl.UTF-8):	Mapa znaków unikodowych
 Name:		gucharmap
 Version:	3.4.1.1
 Release:	1
-License:	GPL v2
+License:	GPL v3+
 Group:		X11/Applications
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/gucharmap/3.4/%{name}-%{version}.tar.xz
 # Source0-md5:	9e69bb89142eb22f5503fcddd9b2ecaf
+Patch0:		%{name}-doc.patch
 URL:		http://live.gnome.org/Gucharmap
 BuildRequires:	autoconf >= 2.56
 BuildRequires:	automake >= 1:1.11
@@ -45,6 +46,7 @@ Gucharmap jest wartościową mapą znaków unikodowych.
 Summary:	gucharmap library for GTK+ 3
 Summary(pl.UTF-8):	Biblioteka gucharmap dla GTK+ 3
 Group:		X11/Libraries
+Requires:	glib2 >= 1:2.26.0
 Requires:	pango >= 1:1.20.0
 
 %description libs
@@ -58,6 +60,7 @@ Summary:	Headers for gucharmap (GTK+ 3 verson)
 Summary(pl.UTF-8):	Pliki nagłówkowe gucharmap (wersja dla GTK+ 3)
 Group:		X11/Development/Libraries
 Requires:	%{name}-libs = %{version}-%{release}
+Requires:	glib2-devel >= 1:2.26.0
 Requires:	gtk+3-devel >= 3.0.0
 
 %description devel
@@ -94,6 +97,7 @@ Dokumentacja API biblioteki gucharmap (wersja dla GTK+ 3).
 
 %prep
 %setup -q
+%patch0 -p1
 
 %build
 %{__gnome_doc_prepare}
@@ -139,6 +143,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files -f %{name}.lang
 %defattr(644,root,root,755)
+%doc AUTHORS COPYING.UNICODE ChangeLog NEWS README TODO
 %attr(755,root,root) %{_bindir}/charmap
 %attr(755,root,root) %{_bindir}/gucharmap
 %attr(755,root,root) %{_bindir}/gnome-character-map
