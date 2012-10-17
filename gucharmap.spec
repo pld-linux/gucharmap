@@ -1,23 +1,21 @@
 Summary:	Unicode character map
 Summary(pl.UTF-8):	Mapa znaków unikodowych
 Name:		gucharmap
-Version:	3.4.1.1
+Version:	3.6.0
 Release:	1
 License:	GPL v3+
 Group:		X11/Applications
-Source0:	http://ftp.gnome.org/pub/GNOME/sources/gucharmap/3.4/%{name}-%{version}.tar.xz
-# Source0-md5:	9e69bb89142eb22f5503fcddd9b2ecaf
-Patch0:		%{name}-doc.patch
+Source0:	http://ftp.gnome.org/pub/GNOME/sources/gucharmap/3.6/%{name}-%{version}.tar.xz
+# Source0-md5:	89d9042cd3ec011c61958dcd9e45e968
 URL:		http://live.gnome.org/Gucharmap
 BuildRequires:	autoconf >= 2.56
 BuildRequires:	automake >= 1:1.11
 BuildRequires:	docbook-dtd412-xml
 BuildRequires:	gettext-devel
-BuildRequires:	glib2-devel >= 1:2.28.0
-BuildRequires:	gnome-common >= 2.24.0
+BuildRequires:	glib2-devel >= 1:2.32.0
 BuildRequires:	gnome-doc-utils >= 0.12.2
 BuildRequires:	gobject-introspection-devel >= 0.10.0
-BuildRequires:	gtk+3-devel >= 3.0.0
+BuildRequires:	gtk+3-devel >= 3.4.0
 BuildRequires:	gtk-doc >= 1.0
 BuildRequires:	intltool >= 0.40.0
 BuildRequires:	libtool
@@ -25,12 +23,11 @@ BuildRequires:	libxml2-progs
 BuildRequires:	pkgconfig
 BuildRequires:	rpmbuild(find_lang) >= 1.23
 BuildRequires:	rpmbuild(macros) >= 1.311
-BuildRequires:	scrollkeeper
 BuildRequires:	tar >= 1:1.22
 BuildRequires:	xz
+BuildRequires:	yelp-tools
 Requires(post,postun):	gtk-update-icon-cache
-Requires(post,postun):	scrollkeeper
-Requires(post,preun):	glib2 >= 1:2.26.0
+Requires(post,preun):	glib2 >= 1:2.32.0
 Requires:	%{name}-libs = %{version}-%{release}
 # sr@Latn vs. sr@latin
 Conflicts:	glibc-misc < 6:2.7
@@ -46,7 +43,7 @@ Gucharmap jest wartościową mapą znaków unikodowych.
 Summary:	gucharmap library for GTK+ 3
 Summary(pl.UTF-8):	Biblioteka gucharmap dla GTK+ 3
 Group:		X11/Libraries
-Requires:	glib2 >= 1:2.26.0
+Requires:	glib2 >= 1:2.32.0
 Requires:	pango >= 1:1.20.0
 
 %description libs
@@ -60,8 +57,8 @@ Summary:	Headers for gucharmap (GTK+ 3 verson)
 Summary(pl.UTF-8):	Pliki nagłówkowe gucharmap (wersja dla GTK+ 3)
 Group:		X11/Development/Libraries
 Requires:	%{name}-libs = %{version}-%{release}
-Requires:	glib2-devel >= 1:2.26.0
-Requires:	gtk+3-devel >= 3.0.0
+Requires:	glib2-devel >= 1:2.32.0
+Requires:	gtk+3-devel >= 3.4.0
 
 %description devel
 The gucharmap-devel package includes the header files that you will
@@ -97,10 +94,8 @@ Dokumentacja API biblioteki gucharmap (wersja dla GTK+ 3).
 
 %prep
 %setup -q
-%patch0 -p1
 
 %build
-%{__gnome_doc_prepare}
 %{__glib_gettextize}
 %{__intltoolize}
 %{__libtoolize}
@@ -125,18 +120,16 @@ rm -rf $RPM_BUILD_ROOT
 
 %{__rm} $RPM_BUILD_ROOT%{_libdir}/*.la
 
-%find_lang %{name} --with-gnome --with-omf
+%find_lang %{name} --with-gnome
 
 %clean
 rm -rf $RPM_BUILD_ROOT
 
 %post
 %glib_compile_schemas
-%scrollkeeper_update_post
 
 %postun
 %glib_compile_schemas
-%scrollkeeper_update_postun
 
 %post	libs -p /sbin/ldconfig
 %postun	libs -p /sbin/ldconfig
