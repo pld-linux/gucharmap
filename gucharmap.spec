@@ -44,6 +44,7 @@ Summary:	gucharmap library for GTK+ 3
 Summary(pl.UTF-8):	Biblioteka gucharmap dla GTK+ 3
 Group:		X11/Libraries
 Requires:	glib2 >= 1:2.32.0
+Requires:	gtk+3 >= 3.4.0
 Requires:	pango >= 1:1.20.0
 
 %description libs
