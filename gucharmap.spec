@@ -1,3 +1,7 @@
+#
+# Conditional build:
+%bcond_without	vala	# Vala API
+#
 Summary:	Unicode character map
 Summary(pl.UTF-8):	Mapa znaków unikodowych
 Name:		gucharmap
@@ -24,6 +28,7 @@ BuildRequires:	pkgconfig
 BuildRequires:	rpmbuild(find_lang) >= 1.23
 BuildRequires:	rpmbuild(macros) >= 1.311
 BuildRequires:	tar >= 1:1.22
+%{?with_vala:BuildRequires:	vala >= 2:0.18}
 BuildRequires:	xz
 BuildRequires:	yelp-tools
 Requires(post,postun):	gtk-update-icon-cache
@@ -93,6 +98,19 @@ gucharmap library API documentation (GTK+ 3 version).
 %description apidocs -l pl.UTF-8
 Dokumentacja API biblioteki gucharmap (wersja dla GTK+ 3).
 
+%package -n vala-gucharmap
+Summary:	gucharmap API for Vala language
+Summary(pl.UTF-8):	API gucharmap dla języka Vala
+Group:		Development/Libraries
+Requires:	%{name}-devel = %{version}-%{release}
+Requires:	vala >= 2:0.16
+
+%description -n vala-gucharmap
+gucharmap API for Vala language.
+
+%description -n vala-gucharmap -l pl.UTF-8
+API gucharmap dla języka Vala.
+
 %prep
 %setup -q
 
@@ -105,19 +123,21 @@ Dokumentacja API biblioteki gucharmap (wersja dla GTK+ 3).
 %{__autoheader}
 %{__autoconf}
 %configure \
-	--disable-silent-rules \
 	--disable-scrollkeeper \
-	--enable-introspection \
+	--disable-silent-rules \
 	--enable-gtk-doc \
-	--with-html-dir=%{_gtkdocdir} \
-	--enable-static
+	--enable-introspection \
+	--enable-static \
+	%{?with_vala:--enable-vala} \
+	--with-html-dir=%{_gtkdocdir}
 %{__make}
 
 %install
 rm -rf $RPM_BUILD_ROOT
 
 %{__make} install \
-	DESTDIR=$RPM_BUILD_ROOT
+	DESTDIR=$RPM_BUILD_ROOT \
+	vapidir=%{_datadir}/vala/vapi
 
 %{__rm} $RPM_BUILD_ROOT%{_libdir}/*.la
 
@@ -165,3 +185,9 @@ rm -rf $RPM_BUILD_ROOT
 %files apidocs
 %defattr(644,root,root,755)
 %{_gtkdocdir}/gucharmap-2.90
+
+%if %{with vala}
+%files -n vala-gucharmap
+%defattr(644,root,root,755)
+%{_datadir}/vala/vapi/Gucharmap-2.90.vapi
+%endif
