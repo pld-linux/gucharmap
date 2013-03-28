@@ -1,0 +1,11 @@
+--- gucharmap-3.8.0/configure.ac.newvala	2013-03-28 13:01:17.803024484 +0100
++++ gucharmap-3.8.0/configure.ac	2013-03-28 13:01:23.876026600 +0100
+@@ -243,7 +243,7 @@ if test -z "$enable_vala"; then
+   enable_vala=no
+ fi
+ m4_ifdef([VAPIGEN_CHECK],
+-  [VAPIGEN_CHECK([0.16],[0.18])],
++  [VAPIGEN_CHECK([0.16])],
+   [AM_CONDITIONAL([ENABLE_VAPIGEN],[false])])
+ 
+ case "$with_gtk" in
