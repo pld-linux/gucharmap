@@ -5,13 +5,12 @@
 Summary:	Unicode character map
 Summary(pl.UTF-8):	Mapa znaków unikodowych
 Name:		gucharmap
-Version:	3.8.0
+Version:	3.8.1
 Release:	1
 License:	GPL v3+
 Group:		X11/Applications
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/gucharmap/3.8/%{name}-%{version}.tar.xz
-# Source0-md5:	7de9ed943a81cc6a62dfbe6e52cbc6ef
-Patch0:		%{name}-vala.patch
+# Source0-md5:	215d502e75e5aa8a4c9dd23b8a8069e0
 URL:		http://live.gnome.org/Gucharmap
 BuildRequires:	autoconf >= 2.56
 BuildRequires:	automake >= 1:1.11
@@ -114,7 +113,6 @@ API gucharmap dla języka Vala.
 
 %prep
 %setup -q
-%patch0 -p1
 
 %build
 %{__glib_gettextize}
