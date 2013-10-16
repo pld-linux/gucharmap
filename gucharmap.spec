@@ -5,12 +5,12 @@
 Summary:	Unicode character map
 Summary(pl.UTF-8):	Mapa znaków unikodowych
 Name:		gucharmap
-Version:	3.9.99
+Version:	3.10.0
 Release:	1
 License:	GPL v3+
 Group:		X11/Applications
-Source0:	http://ftp.gnome.org/pub/GNOME/sources/gucharmap/3.9/%{name}-%{version}.tar.xz
-# Source0-md5:	c01b1dd794a3cfe6889bcfd67c1b8cdf
+Source0:	http://ftp.gnome.org/pub/GNOME/sources/gucharmap/3.10/%{name}-%{version}.tar.xz
+# Source0-md5:	189a4fa740e9902e3097932dfedfe647
 URL:		http://live.gnome.org/Gucharmap
 BuildRequires:	autoconf >= 2.56
 BuildRequires:	automake >= 1:1.11
