@@ -5,15 +5,16 @@
 Summary:	Unicode character map
 Summary(pl.UTF-8):	Mapa znaków unikodowych
 Name:		gucharmap
-Version:	3.10.1
+Version:	3.12.0
 Release:	1
 License:	GPL v3+
 Group:		X11/Applications
-Source0:	http://ftp.gnome.org/pub/GNOME/sources/gucharmap/3.10/%{name}-%{version}.tar.xz
-# Source0-md5:	527e72d3374b76c8818e938546b73e97
+Source0:	http://ftp.gnome.org/pub/GNOME/sources/gucharmap/3.12/%{name}-%{version}.tar.xz
+# Source0-md5:	008d144ac4f160ac4cc328bb7e48bc29
 URL:		http://live.gnome.org/Gucharmap
 BuildRequires:	autoconf >= 2.56
 BuildRequires:	automake >= 1:1.11
+BuildRequires:	desktop-file-utils
 BuildRequires:	docbook-dtd412-xml
 BuildRequires:	gettext-devel
 BuildRequires:	glib2-devel >= 1:2.32.0
@@ -28,7 +29,7 @@ BuildRequires:	pkgconfig
 BuildRequires:	rpmbuild(find_lang) >= 1.23
 BuildRequires:	rpmbuild(macros) >= 1.311
 BuildRequires:	tar >= 1:1.22
-%{?with_vala:BuildRequires:	vala >= 2:0.18}
+%{?with_vala:BuildRequires:	vala >= 2:0.24.0-2}
 BuildRequires:	xz
 BuildRequires:	yelp-tools
 Requires(post,postun):	gtk-update-icon-cache
@@ -103,7 +104,7 @@ Summary:	gucharmap API for Vala language
 Summary(pl.UTF-8):	API gucharmap dla języka Vala
 Group:		Development/Libraries
 Requires:	%{name}-devel = %{version}-%{release}
-Requires:	vala >= 2:0.16
+Requires:	vala >= 2:0.24.0-2
 
 %description -n vala-gucharmap
 gucharmap API for Vala language.
@@ -123,7 +124,6 @@ API gucharmap dla języka Vala.
 %{__autoheader}
 %{__autoconf}
 %configure \
-	--disable-scrollkeeper \
 	--disable-silent-rules \
 	--enable-gtk-doc \
 	--enable-introspection \
@@ -162,6 +162,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/gucharmap
 %attr(755,root,root) %{_bindir}/gnome-character-map
 %{_desktopdir}/gucharmap.desktop
+%{_datadir}/appdata/gucharmap.appdata.xml
 %{_datadir}/glib-2.0/schemas/org.gnome.Charmap.enums.xml
 %{_datadir}/glib-2.0/schemas/org.gnome.Charmap.gschema.xml
 
