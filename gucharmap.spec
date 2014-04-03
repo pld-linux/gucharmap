@@ -1,12 +1,12 @@
 #
 # Conditional build:
 %bcond_without	vala	# Vala API
-#
+
 Summary:	Unicode character map
 Summary(pl.UTF-8):	Mapa znaków unikodowych
 Name:		gucharmap
 Version:	3.12.0
-Release:	1
+Release:	2
 License:	GPL v3+
 Group:		X11/Applications
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/gucharmap/3.12/%{name}-%{version}.tar.xz
@@ -92,6 +92,9 @@ Summary:	gucharmap library API documentation (GTK+ 3 version)
 Summary(pl.UTF-8):	Dokumentacja API biblioteki gucharmap (wersja dla GTK+ 3)
 Group:		Documentation
 Requires:	gtk-doc-common
+%if "%{_rpmversion}" >= "5"
+BuildArch:	noarch
+%endif
 
 %description apidocs
 gucharmap library API documentation (GTK+ 3 version).
