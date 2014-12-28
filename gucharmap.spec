@@ -16,7 +16,7 @@ BuildRequires:	autoconf >= 2.56
 BuildRequires:	automake >= 1:1.11
 BuildRequires:	desktop-file-utils
 BuildRequires:	docbook-dtd412-xml
-BuildRequires:	gettext-devel
+BuildRequires:	gettext-tools
 BuildRequires:	glib2-devel >= 1:2.32.0
 BuildRequires:	gnome-doc-utils >= 0.12.2
 BuildRequires:	gobject-introspection-devel >= 0.10.0
