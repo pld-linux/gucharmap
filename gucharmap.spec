@@ -2,15 +2,29 @@
 # Conditional build:
 %bcond_without	vala	# Vala API
 
+%define		unicode_ver	%{version}
+
 Summary:	Unicode character map
 Summary(pl.UTF-8):	Mapa znaków unikodowych
 Name:		gucharmap
-Version:	3.18.2
-Release:	2
+Version:	9.0.0
+Release:	1
 License:	GPL v3+
 Group:		X11/Applications
-Source0:	http://ftp.gnome.org/pub/GNOME/sources/gucharmap/3.18/%{name}-%{version}.tar.xz
-# Source0-md5:	79670f9b8c9a4888f4ea439fd2e8c589
+Source0:	http://ftp.gnome.org/pub/GNOME/sources/gucharmap/9.0/%{name}-%{version}.tar.xz
+# Source0-md5:	c8618d22c684286f551bef465eb6beda
+Source1:	http://www.unicode.org/Public/%{unicode_ver}/ucd/Blocks.txt
+# Source1-md5:	cde1f7b09c2b18d24add1370ecadfea6
+Source2:	http://www.unicode.org/Public/%{unicode_ver}/ucd/DerivedAge.txt
+# Source2-md5:	a0fb4dbc152439695a457eb1c56d77e7
+Source3:	http://www.unicode.org/Public/%{unicode_ver}/ucd/NamesList.txt
+# Source3-md5:	87d74bd637b7ef615d3df131d8646c65
+Source4:	http://www.unicode.org/Public/%{unicode_ver}/ucd/Scripts.txt
+# Source4-md5:	5515683d7f3399262c3d5561e6acc21e
+Source5:	http://www.unicode.org/Public/%{unicode_ver}/ucd/UnicodeData.txt
+# Source5-md5:	dde25b1cf9bbb4ba1140ac12e4128b0b
+Source6:	http://www.unicode.org/Public/%{unicode_ver}/ucd/Unihan.zip
+# Source6-md5:	303b5e49b65aed9e4a184adc1a1c78f4
 URL:		https://wiki.gnome.org/Apps/Gucharmap
 BuildRequires:	autoconf >= 2.56
 BuildRequires:	automake >= 1:1.11
@@ -31,6 +45,7 @@ BuildRequires:	rpmbuild(macros) >= 1.311
 BuildRequires:	tar >= 1:1.22
 %{?with_vala:BuildRequires:	vala >= 2:0.24.0-2}
 BuildRequires:	xz
+BuildRequires:	unzip
 BuildRequires:	yelp-tools
 Requires(post,postun):	gtk-update-icon-cache
 Requires(post,preun):	glib2 >= 1:2.32.0
@@ -121,6 +136,9 @@ API gucharmap dla języka Vala.
 %prep
 %setup -q
 
+install -d unicode-data
+cp -p %{SOURCE1} %{SOURCE2} %{SOURCE3} %{SOURCE4} %{SOURCE5} %{SOURCE6} unicode-data
+
 %build
 %{__glib_gettextize}
 %{__intltoolize}
@@ -135,7 +153,8 @@ API gucharmap dla języka Vala.
 	--enable-introspection \
 	--enable-static \
 	%{?with_vala:--enable-vala} \
-	--with-html-dir=%{_gtkdocdir}
+	--with-html-dir=%{_gtkdocdir} \
+	--with-unicode-data=unicode-data
 %{__make}
 
 %install
