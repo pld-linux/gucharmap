@@ -2,17 +2,17 @@
 # Conditional build:
 %bcond_without	vala	# Vala API
 
-%define		unicode_ver	%{version}
+%define		unicode_ver	9.0.0
 
 Summary:	Unicode character map
 Summary(pl.UTF-8):	Mapa znaków unikodowych
 Name:		gucharmap
-Version:	9.0.0
+Version:	9.0.2
 Release:	1
 License:	GPL v3+
 Group:		X11/Applications
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/gucharmap/9.0/%{name}-%{version}.tar.xz
-# Source0-md5:	c8618d22c684286f551bef465eb6beda
+# Source0-md5:	2d953eb99509fde539f70b527c23eec8
 Source1:	http://www.unicode.org/Public/%{unicode_ver}/ucd/Blocks.txt
 # Source1-md5:	cde1f7b09c2b18d24add1370ecadfea6
 Source2:	http://www.unicode.org/Public/%{unicode_ver}/ucd/DerivedAge.txt
