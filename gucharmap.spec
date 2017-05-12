@@ -7,12 +7,12 @@
 Summary:	Unicode character map
 Summary(pl.UTF-8):	Mapa znaków unikodowych
 Name:		gucharmap
-Version:	9.0.3
+Version:	9.0.4
 Release:	1
 License:	GPL v3+
 Group:		X11/Applications
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/gucharmap/9.0/%{name}-%{version}.tar.xz
-# Source0-md5:	892b1dc2e02300ed7c99d812f200d734
+# Source0-md5:	b7aa267293a350a9661c654798b99f27
 Source1:	http://www.unicode.org/Public/%{unicode_ver}/ucd/Blocks.txt
 # Source1-md5:	cde1f7b09c2b18d24add1370ecadfea6
 Source2:	http://www.unicode.org/Public/%{unicode_ver}/ucd/DerivedAge.txt
