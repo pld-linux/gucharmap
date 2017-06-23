@@ -2,29 +2,29 @@
 # Conditional build:
 %bcond_without	vala	# Vala API
 
-%define		unicode_ver	9.0.0
+%define		unicode_ver	10.0.0
 
 Summary:	Unicode character map
 Summary(pl.UTF-8):	Mapa znaków unikodowych
 Name:		gucharmap
-Version:	9.0.4
+Version:	10.0.0
 Release:	1
 License:	GPL v3+
 Group:		X11/Applications
-Source0:	http://ftp.gnome.org/pub/GNOME/sources/gucharmap/9.0/%{name}-%{version}.tar.xz
-# Source0-md5:	b7aa267293a350a9661c654798b99f27
+Source0:	http://ftp.gnome.org/pub/GNOME/sources/gucharmap/10.0/%{name}-%{version}.tar.xz
+# Source0-md5:	1c54e1c522ba4ca8695e3119ada0eb53
 Source1:	http://www.unicode.org/Public/%{unicode_ver}/ucd/Blocks.txt
-# Source1-md5:	cde1f7b09c2b18d24add1370ecadfea6
+# Source1-md5:	9b8efb5bb78698a6cf8b5d12c74f3e4e
 Source2:	http://www.unicode.org/Public/%{unicode_ver}/ucd/DerivedAge.txt
-# Source2-md5:	a0fb4dbc152439695a457eb1c56d77e7
+# Source2-md5:	a602e4b44de3350087e40f2eb2184898
 Source3:	http://www.unicode.org/Public/%{unicode_ver}/ucd/NamesList.txt
-# Source3-md5:	87d74bd637b7ef615d3df131d8646c65
+# Source3-md5:	b7ef92161b690241cf7b56065e260a96
 Source4:	http://www.unicode.org/Public/%{unicode_ver}/ucd/Scripts.txt
-# Source4-md5:	5515683d7f3399262c3d5561e6acc21e
+# Source4-md5:	e733ad56659db399922015117491723a
 Source5:	http://www.unicode.org/Public/%{unicode_ver}/ucd/UnicodeData.txt
-# Source5-md5:	dde25b1cf9bbb4ba1140ac12e4128b0b
+# Source5-md5:	2a52f30695dcc821f0f224650552beaf
 Source6:	http://www.unicode.org/Public/%{unicode_ver}/ucd/Unihan.zip
-# Source6-md5:	303b5e49b65aed9e4a184adc1a1c78f4
+# Source6-md5:	8e666a723a26c906d68997d7cae879e2
 URL:		https://wiki.gnome.org/Apps/Gucharmap
 BuildRequires:	autoconf >= 2.56
 BuildRequires:	automake >= 1:1.11
