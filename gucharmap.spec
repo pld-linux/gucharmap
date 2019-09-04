@@ -1,30 +1,33 @@
 #
 # Conditional build:
-%bcond_without	vala	# Vala API
+%bcond_without	vala			# Vala API
+%bcond_with	system_unicode_ucd	# use data from unicode-ucd package instead of separate sources
 
-%define		unicode_ver	11.0.0
+%define		unicode_ver	12.0.0
 
 Summary:	Unicode character map
 Summary(pl.UTF-8):	Mapa znaków unikodowych
 Name:		gucharmap
-Version:	11.0.3
+Version:	12.0.1
 Release:	1
 License:	GPL v3+
 Group:		X11/Applications
-Source0:	http://ftp.gnome.org/pub/GNOME/sources/gucharmap/11.0/%{name}-%{version}.tar.xz
-# Source0-md5:	9f8ebbc62a14d31edf77dadd53c348c8
+Source0:	http://ftp.gnome.org/pub/GNOME/sources/gucharmap/12.0/%{name}-%{version}.tar.xz
+# Source0-md5:	0c34aa29657a41712d011d939c5bc85e
+%if %{without system_unicode_ucd}
 Source1:	http://www.unicode.org/Public/%{unicode_ver}/ucd/Blocks.txt
-# Source1-md5:	b1978f3ebd79119b0b486d468c5ca7b7
+# Source1-md5:	0a484f235f28878edbee63b5720f7bb6
 Source2:	http://www.unicode.org/Public/%{unicode_ver}/ucd/DerivedAge.txt
-# Source2-md5:	6032a595fbb782694456491d86eecfac
+# Source2-md5:	6b4750a2ff1a19ce7f28b6a6528457e8
 Source3:	http://www.unicode.org/Public/%{unicode_ver}/ucd/NamesList.txt
-# Source3-md5:	ed4fd730506caa83a2ac45b90703f235
+# Source3-md5:	d3689065686326cb188e5c0654394cfd
 Source4:	http://www.unicode.org/Public/%{unicode_ver}/ucd/Scripts.txt
-# Source4-md5:	4562fafb7370c76d639ca15b08df91d0
+# Source4-md5:	d89ff4d965caa54ee975b9b8506d49ae
 Source5:	http://www.unicode.org/Public/%{unicode_ver}/ucd/UnicodeData.txt
-# Source5-md5:	acc291106c3758d2025f8d7bd5518bee
+# Source5-md5:	6221effa1dd15524745a467f7366233d
 Source6:	http://www.unicode.org/Public/%{unicode_ver}/ucd/Unihan.zip
-# Source6-md5:	fb1e7437ff3fc2516469f9904cf3fc7c
+# Source6-md5:	55a93848bb2810b942d607e55ad01bf3
+%endif
 URL:		https://wiki.gnome.org/Apps/Gucharmap
 BuildRequires:	autoconf >= 2.56
 BuildRequires:	automake >= 1:1.11
@@ -43,6 +46,10 @@ BuildRequires:	pkgconfig
 BuildRequires:	rpmbuild(find_lang) >= 1.23
 BuildRequires:	rpmbuild(macros) >= 1.311
 BuildRequires:	tar >= 1:1.22
+%if %{with system_unicode_ucd}
+BuildRequires:	unicode-ucd = %{unicode_ver}
+BuildRequires:	unicode-ucd-unihan = %{unicode_ver}
+%endif
 %{?with_vala:BuildRequires:	vala >= 2:0.24.0-2}
 BuildRequires:	xz
 BuildRequires:	unzip
@@ -136,8 +143,10 @@ API gucharmap dla języka Vala.
 %prep
 %setup -q
 
+%if %{without system_unicode_ucd}
 install -d unicode-data
 cp -p %{SOURCE1} %{SOURCE2} %{SOURCE3} %{SOURCE4} %{SOURCE5} %{SOURCE6} unicode-data
+%endif
 
 %build
 %{__glib_gettextize}
@@ -154,7 +163,7 @@ cp -p %{SOURCE1} %{SOURCE2} %{SOURCE3} %{SOURCE4} %{SOURCE5} %{SOURCE6} unicode-
 	--enable-static \
 	%{?with_vala:--enable-vala} \
 	--with-html-dir=%{_gtkdocdir} \
-	--with-unicode-data=unicode-data
+	--with-unicode-data=%{?with_system_unicode_ucd:%{_datadir}/unicode/ucd}%{!?with_system_unicode_ucd:unicode-data}
 %{__make}
 
 %install
