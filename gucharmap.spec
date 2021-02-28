@@ -114,9 +114,7 @@ Summary:	gucharmap library API documentation (GTK+ 3 version)
 Summary(pl.UTF-8):	Dokumentacja API biblioteki gucharmap (wersja dla GTK+ 3)
 Group:		Documentation
 Requires:	gtk-doc-common
-%if "%{_rpmversion}" >= "5"
 BuildArch:	noarch
-%endif
 
 %description apidocs
 gucharmap library API documentation (GTK+ 3 version).
@@ -130,9 +128,7 @@ Summary(pl.UTF-8):	API gucharmap dla języka Vala
 Group:		Development/Libraries
 Requires:	%{name}-devel = %{version}-%{release}
 Requires:	vala >= 2:0.24.0-2
-%if "%{_rpmversion}" >= "5"
 BuildArch:	noarch
-%endif
 
 %description -n vala-gucharmap
 gucharmap API for Vala language.
