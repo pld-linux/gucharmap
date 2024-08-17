@@ -74,6 +74,7 @@ Group:		X11/Libraries
 Requires:	glib2 >= 1:2.32.0
 Requires:	gtk+3 >= 3.4.0
 Requires:	pango >= 1:1.20.0
+Requires:	pcre2-8 >= 10.21
 
 %description libs
 This package contains gucharmap library for GTK+ 3.
@@ -88,6 +89,7 @@ Group:		X11/Development/Libraries
 Requires:	%{name}-libs = %{version}-%{release}
 Requires:	glib2-devel >= 1:2.32.0
 Requires:	gtk+3-devel >= 3.4.0
+Requires:	pcre2-8-devel >= 10.21
 
 %description devel
 The gucharmap-devel package includes the header files that you will
