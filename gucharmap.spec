@@ -1,64 +1,64 @@
 #
 # Conditional build:
+%bcond_without	static_libs		# static library
 %bcond_without	vala			# Vala API
 %bcond_with	system_unicode_ucd	# use data from unicode-ucd package instead of separate sources
 
-%define		unicode_ver	12.0.0
+%define		unicode_ver	15.1.0
 
 Summary:	Unicode character map
 Summary(pl.UTF-8):	Mapa znaków unikodowych
 Name:		gucharmap
-Version:	12.0.1
+Version:	15.1.5
 Release:	1
 License:	GPL v3+
 Group:		X11/Applications
-Source0:	http://ftp.gnome.org/pub/GNOME/sources/gucharmap/12.0/%{name}-%{version}.tar.xz
-# Source0-md5:	0c34aa29657a41712d011d939c5bc85e
+#Source0Download: https://gitlab.gnome.org/GNOME/gucharmap/-/tags
+Source0:	https://gitlab.gnome.org/GNOME/gucharmap/-/archive/%{version}/%{name}-%{version}.tar.bz2
+# Source0-md5:	f50222e790637b951ae6a798d71b3f40
 %if %{without system_unicode_ucd}
 Source1:	http://www.unicode.org/Public/%{unicode_ver}/ucd/Blocks.txt
-# Source1-md5:	0a484f235f28878edbee63b5720f7bb6
+# Source1-md5:	abcbb375c1aa7d2714f516e95178adbf
 Source2:	http://www.unicode.org/Public/%{unicode_ver}/ucd/DerivedAge.txt
-# Source2-md5:	6b4750a2ff1a19ce7f28b6a6528457e8
+# Source2-md5:	a1a39067cba80080209a1bd820891efd
 Source3:	http://www.unicode.org/Public/%{unicode_ver}/ucd/NamesList.txt
-# Source3-md5:	d3689065686326cb188e5c0654394cfd
+# Source3-md5:	4e6f99a221856f540cc9f71340877ad8
 Source4:	http://www.unicode.org/Public/%{unicode_ver}/ucd/Scripts.txt
-# Source4-md5:	d89ff4d965caa54ee975b9b8506d49ae
+# Source4-md5:	e573a4771266014bea6b67d62533869c
 Source5:	http://www.unicode.org/Public/%{unicode_ver}/ucd/UnicodeData.txt
-# Source5-md5:	6221effa1dd15524745a467f7366233d
+# Source5-md5:	c94d3d92f1c66e50f750fe84b8055939
 Source6:	http://www.unicode.org/Public/%{unicode_ver}/ucd/Unihan.zip
-# Source6-md5:	55a93848bb2810b942d607e55ad01bf3
+# Source6-md5:	08321a1a9909ce7f4400218fdcd819df
 %endif
 URL:		https://wiki.gnome.org/Apps/Gucharmap
-BuildRequires:	autoconf >= 2.56
-BuildRequires:	automake >= 1:1.11
 BuildRequires:	desktop-file-utils
 BuildRequires:	docbook-dtd412-xml
+BuildRequires:	freetype-devel >= 2.0
 BuildRequires:	gettext-tools
 BuildRequires:	glib2-devel >= 1:2.32.0
-BuildRequires:	gnome-common
 BuildRequires:	gobject-introspection-devel >= 0.10.0
 BuildRequires:	gtk+3-devel >= 3.4.0
 BuildRequires:	gtk-doc >= 1.0
 BuildRequires:	intltool >= 0.40.0
-BuildRequires:	libtool
 BuildRequires:	libxml2-progs
+BuildRequires:	meson >= 0.62.0
+BuildRequires:	ninja >= 1.5
+BuildRequires:	pcre2-8-devel >= 10.21
 BuildRequires:	pkgconfig
+BuildRequires:	rpm-build >= 4.6
 BuildRequires:	rpmbuild(find_lang) >= 1.23
-BuildRequires:	rpmbuild(macros) >= 1.311
-BuildRequires:	tar >= 1:1.22
+BuildRequires:	rpmbuild(macros) >= 1.736
+BuildRequires:	sed >= 4.0
 %if %{with system_unicode_ucd}
 BuildRequires:	unicode-ucd = %{unicode_ver}
 BuildRequires:	unicode-ucd-unihan = %{unicode_ver}
 %endif
 %{?with_vala:BuildRequires:	vala >= 2:0.24.0-2}
-BuildRequires:	xz
 BuildRequires:	unzip
 BuildRequires:	yelp-tools
 Requires(post,postun):	gtk-update-icon-cache
 Requires(post,preun):	glib2 >= 1:2.32.0
 Requires:	%{name}-libs = %{version}-%{release}
-# sr@Latn vs. sr@latin
-Conflicts:	glibc-misc < 6:2.7
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -144,32 +144,21 @@ install -d unicode-data
 cp -p %{SOURCE1} %{SOURCE2} %{SOURCE3} %{SOURCE4} %{SOURCE5} %{SOURCE6} unicode-data
 %endif
 
+%if %{with static_libs}
+%{__sed} -i -e '/^libgucharmap_gtk3 = / s/shared_library/library/' gucharmap/meson.build
+%endif
+
 %build
-%{__glib_gettextize}
-%{__intltoolize}
-%{__libtoolize}
-%{__aclocal} -I m4
-%{__automake}
-%{__autoheader}
-%{__autoconf}
-%configure \
-	--disable-silent-rules \
-	--enable-gtk-doc \
-	--enable-introspection \
-	--enable-static \
-	%{?with_vala:--enable-vala} \
-	--with-html-dir=%{_gtkdocdir} \
-	--with-unicode-data=%{?with_system_unicode_ucd:%{_datadir}/unicode/ucd}%{!?with_system_unicode_ucd:unicode-data}
-%{__make}
+%meson build \
+	-Ducd_path=%{?with_system_unicode_ucd:%{_datadir}/unicode/ucd}%{!?with_system_unicode_ucd:$(pwd)/unicode-data} \
+	%{!?with_vala:-Dvapi=false}
+
+%ninja_build -C build
 
 %install
 rm -rf $RPM_BUILD_ROOT
 
-%{__make} install \
-	DESTDIR=$RPM_BUILD_ROOT \
-	vapidir=%{_datadir}/vala/vapi
-
-%{__rm} $RPM_BUILD_ROOT%{_libdir}/*.la
+%ninja_install -C build
 
 %find_lang %{name} --with-gnome
 
@@ -187,13 +176,10 @@ rm -rf $RPM_BUILD_ROOT
 
 %files -f %{name}.lang
 %defattr(644,root,root,755)
-%doc AUTHORS COPYING.UNICODE ChangeLog NEWS TODO
-%attr(755,root,root) %{_bindir}/charmap
+%doc COPYING.UNICODE README.md TODO
 %attr(755,root,root) %{_bindir}/gucharmap
-%attr(755,root,root) %{_bindir}/gnome-character-map
 %{_desktopdir}/gucharmap.desktop
-%{_datadir}/metainfo/gucharmap.appdata.xml
-%{_datadir}/glib-2.0/schemas/org.gnome.Charmap.enums.xml
+%{_datadir}/metainfo/gucharmap.metainfo.xml
 %{_datadir}/glib-2.0/schemas/org.gnome.Charmap.gschema.xml
 
 %files libs
@@ -209,9 +195,11 @@ rm -rf $RPM_BUILD_ROOT
 %{_pkgconfigdir}/gucharmap-2.90.pc
 %{_datadir}/gir-1.0/Gucharmap-2.90.gir
 
+%if %{with static_libs}
 %files static
 %defattr(644,root,root,755)
 %{_libdir}/libgucharmap_2_90.a
+%endif
 
 %files apidocs
 %defattr(644,root,root,755)
@@ -220,5 +208,6 @@ rm -rf $RPM_BUILD_ROOT
 %if %{with vala}
 %files -n vala-gucharmap
 %defattr(644,root,root,755)
+%{_datadir}/vala/vapi/gucharmap-2.90.deps
 %{_datadir}/vala/vapi/gucharmap-2.90.vapi
 %endif
