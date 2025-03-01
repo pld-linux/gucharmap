@@ -4,31 +4,31 @@
 %bcond_without	vala			# Vala API
 %bcond_with	system_unicode_ucd	# use data from unicode-ucd package instead of separate sources
 
-%define		unicode_ver	15.1.0
+%define		unicode_ver	16.0.0
 
 Summary:	Unicode character map
 Summary(pl.UTF-8):	Mapa znaków unikodowych
 Name:		gucharmap
-Version:	15.1.5
+Version:	16.0.2
 Release:	1
 License:	GPL v3+
 Group:		X11/Applications
 #Source0Download: https://gitlab.gnome.org/GNOME/gucharmap/-/tags
 Source0:	https://gitlab.gnome.org/GNOME/gucharmap/-/archive/%{version}/%{name}-%{version}.tar.bz2
-# Source0-md5:	f50222e790637b951ae6a798d71b3f40
+# Source0-md5:	b349d3a7d5606a934a1a5fe71a7550f0
 %if %{without system_unicode_ucd}
 Source1:	http://www.unicode.org/Public/%{unicode_ver}/ucd/Blocks.txt
-# Source1-md5:	abcbb375c1aa7d2714f516e95178adbf
+# Source1-md5:	f9f7b6476b2649553fa8cdc5544f804a
 Source2:	http://www.unicode.org/Public/%{unicode_ver}/ucd/DerivedAge.txt
-# Source2-md5:	a1a39067cba80080209a1bd820891efd
+# Source2-md5:	b848bf714511f1212cea3519a89b29d3
 Source3:	http://www.unicode.org/Public/%{unicode_ver}/ucd/NamesList.txt
-# Source3-md5:	4e6f99a221856f540cc9f71340877ad8
+# Source3-md5:	6c53d0a345f50ce94b9706d86cb44724
 Source4:	http://www.unicode.org/Public/%{unicode_ver}/ucd/Scripts.txt
-# Source4-md5:	e573a4771266014bea6b67d62533869c
+# Source4-md5:	64db902717355c3fc8eee3d125de92cf
 Source5:	http://www.unicode.org/Public/%{unicode_ver}/ucd/UnicodeData.txt
-# Source5-md5:	c94d3d92f1c66e50f750fe84b8055939
+# Source5-md5:	f50a0495d2000b7d6dd979cb40e00ba2
 Source6:	http://www.unicode.org/Public/%{unicode_ver}/ucd/Unihan.zip
-# Source6-md5:	08321a1a9909ce7f4400218fdcd819df
+# Source6-md5:	aa81fdcb61759c4b8316f2c43d24fc5e
 %endif
 URL:		https://wiki.gnome.org/Apps/Gucharmap
 BuildRequires:	desktop-file-utils
@@ -47,7 +47,7 @@ BuildRequires:	pcre2-8-devel >= 10.21
 BuildRequires:	pkgconfig
 BuildRequires:	rpm-build >= 4.6
 BuildRequires:	rpmbuild(find_lang) >= 1.23
-BuildRequires:	rpmbuild(macros) >= 1.736
+BuildRequires:	rpmbuild(macros) >= 2.042
 BuildRequires:	sed >= 4.0
 %if %{with system_unicode_ucd}
 BuildRequires:	unicode-ucd = %{unicode_ver}
@@ -151,16 +151,16 @@ cp -p %{SOURCE1} %{SOURCE2} %{SOURCE3} %{SOURCE4} %{SOURCE5} %{SOURCE6} unicode-
 %endif
 
 %build
-%meson build \
+%meson \
 	-Ducd_path=%{?with_system_unicode_ucd:%{_datadir}/unicode/ucd}%{!?with_system_unicode_ucd:$(pwd)/unicode-data} \
 	%{!?with_vala:-Dvapi=false}
 
-%ninja_build -C build
+%meson_build -C build
 
 %install
 rm -rf $RPM_BUILD_ROOT
 
-%ninja_install -C build
+%meson_install -C build
 
 %find_lang %{name} --with-gnome
 
