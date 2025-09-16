@@ -4,31 +4,32 @@
 %bcond_without	vala			# Vala API
 %bcond_with	system_unicode_ucd	# use data from unicode-ucd package instead of separate sources
 
-%define		unicode_ver	16.0.0
+%define		unicode_ver	17.0.0
 
 Summary:	Unicode character map
 Summary(pl.UTF-8):	Mapa znaków unikodowych
 Name:		gucharmap
-Version:	16.0.2
+Version:	17.0.0
 Release:	1
 License:	GPL v3+
 Group:		X11/Applications
-#Source0Download: https://gitlab.gnome.org/GNOME/gucharmap/-/tags
-Source0:	https://gitlab.gnome.org/GNOME/gucharmap/-/archive/%{version}/%{name}-%{version}.tar.bz2
-# Source0-md5:	b349d3a7d5606a934a1a5fe71a7550f0
+##Source0Download: https://gitlab.gnome.org/GNOME/gucharmap/-/tags
+#Source0:	https://gitlab.gnome.org/GNOME/gucharmap/-/archive/%{version}/%{name}-%{version}.tar.bz2
+Source0:	https://download.gnome.org/sources/gucharmap/17.0/%{name}-%{version}.tar.xz
+# Source0-md5:	08fe4522b3710785437194a68dada93d
 %if %{without system_unicode_ucd}
 Source1:	http://www.unicode.org/Public/%{unicode_ver}/ucd/Blocks.txt
-# Source1-md5:	f9f7b6476b2649553fa8cdc5544f804a
+# Source1-md5:	bbb54bbda639796d4d0e9344e537d892
 Source2:	http://www.unicode.org/Public/%{unicode_ver}/ucd/DerivedAge.txt
-# Source2-md5:	b848bf714511f1212cea3519a89b29d3
+# Source2-md5:	566dc8f1009f0e191ab4b4ac32e0065d
 Source3:	http://www.unicode.org/Public/%{unicode_ver}/ucd/NamesList.txt
-# Source3-md5:	6c53d0a345f50ce94b9706d86cb44724
+# Source3-md5:	18d252ee9f01cc823fa77f5c1b77d859
 Source4:	http://www.unicode.org/Public/%{unicode_ver}/ucd/Scripts.txt
-# Source4-md5:	64db902717355c3fc8eee3d125de92cf
+# Source4-md5:	879627f9aa66d57ac55717670b251bf5
 Source5:	http://www.unicode.org/Public/%{unicode_ver}/ucd/UnicodeData.txt
-# Source5-md5:	f50a0495d2000b7d6dd979cb40e00ba2
+# Source5-md5:	959cb19fcda0240caef8c02953e3d771
 Source6:	http://www.unicode.org/Public/%{unicode_ver}/ucd/Unihan.zip
-# Source6-md5:	aa81fdcb61759c4b8316f2c43d24fc5e
+# Source6-md5:	c619d9d45cfb2c96e468b6b64e5bfe2e
 %endif
 URL:		https://wiki.gnome.org/Apps/Gucharmap
 BuildRequires:	desktop-file-utils
@@ -49,12 +50,14 @@ BuildRequires:	rpm-build >= 4.6
 BuildRequires:	rpmbuild(find_lang) >= 1.23
 BuildRequires:	rpmbuild(macros) >= 2.042
 BuildRequires:	sed >= 4.0
+BuildRequires:	tar >= 1:1.22
 %if %{with system_unicode_ucd}
 BuildRequires:	unicode-ucd = %{unicode_ver}
 BuildRequires:	unicode-ucd-unihan = %{unicode_ver}
 %endif
 %{?with_vala:BuildRequires:	vala >= 2:0.24.0-2}
 BuildRequires:	unzip
+BuildRequires:	xz
 BuildRequires:	yelp-tools
 Requires(post,postun):	gtk-update-icon-cache
 Requires(post,preun):	glib2 >= 1:2.32.0
@@ -187,12 +190,12 @@ rm -rf $RPM_BUILD_ROOT
 %files libs
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libgucharmap_2_90.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libgucharmap_2_90.so.7
+%ghost %{_libdir}/libgucharmap_2_90.so.7
 %{_libdir}/girepository-1.0/Gucharmap-2.90.typelib
 
 %files devel
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/libgucharmap_2_90.so
+%{_libdir}/libgucharmap_2_90.so
 %{_includedir}/gucharmap-2.90
 %{_pkgconfigdir}/gucharmap-2.90.pc
 %{_datadir}/gir-1.0/Gucharmap-2.90.gir
