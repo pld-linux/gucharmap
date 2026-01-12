@@ -9,14 +9,14 @@
 Summary:	Unicode character map
 Summary(pl.UTF-8):	Mapa znaków unikodowych
 Name:		gucharmap
-Version:	17.0.0
+Version:	17.0.1
 Release:	1
 License:	GPL v3+
 Group:		X11/Applications
 ##Source0Download: https://gitlab.gnome.org/GNOME/gucharmap/-/tags
 #Source0:	https://gitlab.gnome.org/GNOME/gucharmap/-/archive/%{version}/%{name}-%{version}.tar.bz2
 Source0:	https://download.gnome.org/sources/gucharmap/17.0/%{name}-%{version}.tar.xz
-# Source0-md5:	08fe4522b3710785437194a68dada93d
+# Source0-md5:	26516ac2c0c68f7be2b4fbcaffd68b97
 %if %{without system_unicode_ucd}
 Source1:	http://www.unicode.org/Public/%{unicode_ver}/ucd/Blocks.txt
 # Source1-md5:	bbb54bbda639796d4d0e9344e537d892
